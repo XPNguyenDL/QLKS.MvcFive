@@ -1,0 +1,170 @@
+﻿@model PagedList.IPagedList<Supplier>
+@{
+    ViewBag.Title = "Quản lý nhà cung cấp";
+}
+
+@section pluginStyles
+{
+    <link href="~/Content/PagedList.css" rel="stylesheet"/>
+    <link href="~/Content/AdmGrid.css" rel="stylesheet"/>
+
+}
+
+<div class="row">
+	<div class="ibox float-e-margins">
+		<div class="ibox-title">
+			<h5>Danh sách nhà cung cấp</h5>
+			<div class="ibox-tools">
+				@*@(Html.Bootstrap()
+					.ActionLink("Thêm công ty mới", "Create")
+					.Class("btn btn-primary btn-xs")
+					.PrependIcon("fa fa-plus"))*@
+				<span class="">
+					@Html.ActionLink("Thêm công ty mới", "Create", null, new {@class = "btn btn-primary btn-xs" })
+					<i class="fa fa-plus"></i>
+				</span>
+			</div>
+		</div>
+
+		<div class="ibox-content p-sm">
+			<!-- Phẩn hiển thị form tìm kiếm -->
+			<div class="row">
+				<div class="col-md-6 m-b-sm">
+					@using (Html.BeginForm("Index", "Supplier", FormMethod.Get,
+						new { @class = "form-horizontal", role = "search", id = "searchSupplier" }))
+					{
+						<div class="input-group">
+							@(Html.TextBox("Keyword", null, new
+							{
+								placeholder = "Nhập tên công ty hoặc thông tin liên lạc khác",
+								@class = "input-sm form-control"
+							}))
+
+							@Html.Hidden("PageSize", null, new { id = "pageSize" })
+
+							<span class="input-group-btn">
+								<button type="submit" class="btn btn-sm btn-primary">Tìm kiếm</button>
+								@(Html.ActionLink("Bỏ lọc", "Index", null, new {@class = "btn btn-sm btn-warning"}))
+							</span>
+						</div>
+					}
+				</div>
+				<div class="col-md-6 m-b-sm">
+
+				</div>
+			</div>
+
+			<!-- Phẩn hiển thị danh sách nhà cung cấp -->
+			<table id="tblsuppliers" class="table table-responsive table-bordered table-hover">
+				<tr>
+					<th>Tên công ty</th>
+
+					<th width="20%" class="hidden-sm hidden-xs">Thông tin liên hệ</th>
+					<th width="30%" class="hidden-sm hidden-xs">Thông tin khác</th>
+					<th>Trạng thái</th>
+					<th></th>
+				</tr>
+				@foreach (var item in Model)
+				{
+					<tr>
+						<td>
+							<strong>@Html.DisplayFor(modelItem => item.Name)</strong>
+							<br />
+							<small>@Html.DisplayFor(modelItem => item.Description)</small>
+						</td>
+						<td class="hidden-sm hidden-xs">
+							Họ tên: @Html.DisplayFor(modelItem => item.ContactName)
+							<br />
+							<small>Chức vụ: @Html.DisplayFor(modelItem => item.ContactTitle)</small>
+						</td>
+
+						<td class="hidden-sm hidden-xs">
+							Địa chỉ: @Html.DisplayFor(modelItem => item.Address) <br />
+							UserName: @Html.DisplayFor(modelItem => item.Email) <br />
+							Điện thoại: @Html.DisplayFor(modelItem => item.Phone) <br />
+							Website: @Html.DisplayFor(modelItem => item.HomePage) <br />
+						</td>
+
+						<td class="td_toggle">
+							<button type="button" class="toggle @(item.Actived.ToString().ToLower())"
+							        data-toggle-sate="true"
+							        data-url="@Url.Action("UpdateToggle")"
+							        data-srgs="Actived_@(item.Actived.ToString().ToLower())_@(item.SupplierId)">
+							</button>
+						</td>
+
+                        <td>
+                            @(Html.Bootstrap()
+								.ActionLink("", "Edit")
+								.RouteValues(new {id = item.SupplierId})
+								.Title("Cập nhật")
+								.AppendIcon("fa fa-pencil fa-2x"))
+							
+
+                            @(Html.Bootstrap()
+								.ActionLink("", "GetBySupplierId", "Product")
+								.Class("ajax-link")
+								.RouteValues(new {id = item.SupplierId})
+								.AppendIcon("fa fa-gift fa-2x")
+	                            .Title("Xem danh sách sản phẩm"))
+                        </td>
+					</tr>
+				}
+			</table>
+
+			<!-- Phẩn hiển thị thanh phân trang -->
+			<div class="row">
+				<div class="col-sm-6 m-b-sm text-center">
+					Hiển thị
+					@(Html.DropDownList("PageSize", null, 
+						new {@class = "input-sm", id = "pageSelect"}))
+					mẫu tin
+				</div>
+				<div class="col-md-6 text-center">
+					@Html.PagedListPager(
+						Model, 
+						page => Url.Action(
+							"Index",
+							new
+							{
+								page,
+								pageSize = ViewBag.CurrentPageSize,
+								keyword = ViewBag.Keywowrd
+							}),
+						PagedListRenderOptions.ClassicPlusFirstAndLast)
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+@section scripts
+{
+	<script type="text/javascript">
+		$(document).ready(function() {
+			$('#tblsuppliers tr ').on("click",
+				"[data-toggle-stale = true]",
+				function(e) {
+					var $this = $(this);
+					var url = $this.attr('data-url');
+					var args = $this.attr('data-args');
+					$.post(url,
+						{ "args": args },
+						function(data) {
+							if (data.Result) {
+								$this.attr('data-args', data.Message);
+								$this.toggleClass('true');
+							} else {
+								alert(data.Message);
+							}
+						});
+				});
+			$('#pageSelect').change(function() {
+				$('#pageSize').val($(this).val());
+				$('#searchSupplier').submit();
+			})
+		})
+	</script>
+}
+
+

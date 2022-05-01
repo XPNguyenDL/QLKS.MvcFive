@@ -1,0 +1,58 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - Hotel</title>
+
+    @*@Styles.Render("~/Content/css")
+        @Scripts.Render("~/bundles/modernizr")*@
+    <!--Bootstrap & font-->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    @Styles.Render("~/Content/admbootstrap")
+
+    <!--Plugin Style-->
+    
+    @RenderSection("pluginStyles", required: false)
+
+    <!--Custom styles for this site-->
+    @Styles.Render("~/Content/admstyle")
+
+    <!-- Support older browsers-->
+    @Scripts.Render("~/bundles/modernizr")
+</head>
+<body>
+    <div id="wrapper">
+        @Html.Partial("_Navigation")
+
+        <div id="page-wrapper" class="gray-bg">
+            <div class="row border-bottom">
+                @Html.Partial("_NavBarHeader")
+            </div>
+
+            <div class="row wrapper border-bottom white-bg page-heading">
+                @Html.Partial("_PageHeader")
+            </div>
+
+            <div class="wrapper wrapper-content">
+                @RenderBody()
+            </div>
+
+            <footer>
+                @Html.Partial("_Footer")
+            </footer>
+        </div>
+
+    </div>
+    <!-- Support older browsers-->
+    @Scripts.Render("~/bundles/admmainjs")
+
+
+    <!-- Support older browsers-->
+    @Scripts.Render("~/bundles/admcustomjs")
+
+    <!-- Support older browsers-->
+    @RenderSection("scripts", required: false)
+
+</body>
+</html>

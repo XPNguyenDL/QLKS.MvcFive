@@ -1,0 +1,117 @@
+﻿<!DOCTYPE html>
+<html class="no-js" lang="zxx">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - My ASP.NET Application</title>
+    @*@Styles.Render("~/Content/css")
+        @Scripts.Render("~/bundles/modernizr")*@
+    @Styles.Render("~/Content/hotelstyle")
+    <link rel="manifest" href="site.webmanifest">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+</head>
+<body>
+    @*<div class="navbar navbar-inverse navbar-fixed-top">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                </div>
+                <div class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav">
+                        <li>@Html.ActionLink("Home", "Index", "Home")</li>
+                        <li>@Html.ActionLink("About", "About", "Home")</li>
+                        <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+                    </ul>
+                    @Html.Partial("_LoginPartial")
+                </div>
+            </div>
+        </div>
+        <div class="container body-content">
+            @RenderBody()
+            <hr />
+            <footer>
+                <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
+            </footer>
+        </div>
+
+        @Scripts.Render("~/bundles/jquery")
+        @Scripts.Render("~/bundles/bootstrap")*@
+
+    <!-- Preloader Start -->
+    @*<div id="preloader-active">
+            <div class="preloader d-flex align-items-center justify-content-center">
+                <div class="preloader-inner position-relative">
+                    <div class="preloader-circle"></div>
+                    <div class="preloader-img pere-text">
+                        <strong>Hotel</strong>
+                    </div>
+                </div>
+            </div>
+        </div>*@
+
+    <!-- Preloader Start -->
+    <div id="preloader-active">
+        <div class="preloader d-flex align-items-center justify-content-center">
+            <div class="preloader-inner position-relative">
+                <div class="preloader-circle"></div>
+                <div class="preloader-img pere-text">
+                    <strong>Hotel</strong>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Preloader Start -->
+
+    @RenderPage("_HeaderLayout.cshtml")
+
+
+    @RenderBody()
+
+    @RenderPage("_FooterLayout.cshtml")
+
+    @*@Scripts.Render("~/Script/hotelscript")
+        @Scripts.Render("~/Script/HotelSlick")*@
+
+    <script src="~/Scripts/hotelJs/js/vendor/modernizr-3.5.0.min.js"></script>
+
+    <!-- Jquery, Popper, Bootstrap -->
+    <script src="~/Scripts/hotelJs/js/vendor/jquery-1.12.4.min.js"></script>
+    <script src="~/Scripts/hotelJs/js/popper.min.js"></script>
+    <script src="~/Scripts/hotelJs/js/bootstrap.min.js"></script>
+    @*Jquery Mobile Menu*@
+    <script src="~/Scripts/hotelJs/js/jquery.slicknav.min.js"></script>
+    @*Jquery Slick , Owl-Carousel Plugins*@
+    <script src="~/Scripts/hotelJs/js/owl.carousel.min.js"></script>
+    <script src="~/Scripts/hotelJs/js/slick.min.js"></script>
+    @*Date Picker*@
+    <script src="~/Scripts/hotelJs/js/gijgo.min.js"></script>
+    @*One Page, Animated-HeadLin*@
+    <script src="~/Scripts/hotelJs/js/wow.min.js"></script>
+    <script src="~/Scripts/hotelJs/js/animated.headline.js"></script>
+    <script src="~/Scripts/hotelJs/js/jquery.magnific-popup.js"></script>
+
+    @*Scrollup, nice-select, sticky*@
+    <script src="~/Scripts/hotelJs/js/jquery.scrollUp.min.js"></script>
+    <script src="~/Scripts/hotelJs/js/jquery.nice-select.min.js"></script>
+    <script src="~/Scripts/hotelJs/js/jquery.sticky.js"></script>
+
+    @*contact js*@
+    <script src="~/Scripts/hotelJs/js/contact.js"></script>
+    <script src="~/Scripts/hotelJs/js/jquery.form.js"></script>
+    <script src="~/Scripts/hotelJs/js/jquery.validate.min.js"></script>
+    <script src="~/Scripts/hotelJs/js/mail-script.js"></script>
+    <script src="~/Scripts/hotelJs/js/jquery.ajaxchimp.min.js"></script>
+
+   @* Jquery Plugins, main Jquery*@
+    <script src="~/Scripts/hotelJs/js/plugins.js"></script>
+    <script src="~/Scripts/hotelJs/js/main.js"></script>
+    @RenderSection("scripts", required: false)
+</body>
+</html>
+

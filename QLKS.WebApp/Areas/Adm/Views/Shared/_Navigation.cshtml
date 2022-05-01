@@ -1,0 +1,124 @@
+﻿
+
+
+<nav class="navbar-default navbar-static-side" role="navigation">
+    <div class="sidebar-collapse">
+        <ul id="side-menu" class="nav">
+            <li class="nav-header">
+                @Html.Partial("_ProfilePartial")
+            </li>
+            <li>
+                <a href="@Url.Action("Index", "Dashboard")">
+                    <i class="fa fa-th-large"></i>
+                    <span class="nav-label">Trang chủ</span>
+                </a>
+                
+            </li>
+
+            <!--Menu chức năng-->
+            <!--Chúc năng thống kê HH-->
+            <li>
+                <a href="#">
+                    <i class="fa fa-sitemap"></i>
+                    <span class="nav-label">Loại mặt hàng</span>
+                    <span class="fa arrow"></span>
+                </a>
+                <ul class="nav nav-second-level">
+                    <li>
+                        @Html.ActionLink("Xem danh mục", "Index", "Category")
+                    </li>
+                    <li>
+                        @Html.ActionLink("Tạo danh mục mới", "Create", "Category")
+                    </li>
+                    <li>
+                        @Html.ActionLink("Thống kê SL hàng", "Statistic", "Category")
+                    </li>
+                </ul>
+            </li>
+
+            <!--Chức năng của nhà cung cấp-->
+            <li>
+                <a href="#">
+                    <i class="fa fa-university"></i>
+                    <span class="nav-label">Nhà cung cấp</span>
+                    <span class="fa arrow"></span>
+                </a>
+                <ul class="nav nav-second-level">
+                    <li>
+                        @Html.ActionLink("Xem danh mục", "Index", "Supplier")
+                    </li>
+                    <li>
+                        @Html.ActionLink("Thêm NCC mới", "Create", "Supplier")
+                    </li>
+                </ul>
+            </li>
+
+            <!--Chức năng liên quan sản phẩm-->
+            <li>
+                <a href="#">
+                    <i class="fa fa-gift"></i>
+                    <span class="nav-label">Quản lý sản phẩm</span>
+                    <span class="fa arrow"></span>
+                </a>
+                <ul class="nav nav-second-level">
+                    <li>
+                        @Html.ActionLink("Xem danh mục", "Index", "Product")
+                    </li>
+                    <li>
+                        @Html.ActionLink("Thêm sản phẩm mới", "Create", "Product")
+                    </li>
+                    <li>
+                        @Html.ActionLink("Nhập thêm hàng", "Import", "Product")
+                    </li>
+                    <li>
+                        @Html.ActionLink("Sản phẩm hết hàng", "OutOfStock", "Product")
+                    </li>
+                </ul>
+            </li>
+
+            <!--Chức năng liên quan tới đơn đặt hàng-->
+            <li>
+	            <a href="#">
+		            <i class="fa fa-shopping-cart"></i>
+		            <span class="nav-label">Đơn đặt hàng</span>
+		            <span class="fa arrow"></span>
+	            </a>
+	            <ul class="nav nav-second-level">
+		            <li>
+			            @Html.ActionLink("Xem đơn hàng mới", "Index", "Order")
+		            </li>
+		            <li>
+			            @Html.ActionLink("Đơn chưa giao", "Unship", "Order")
+		            </li>
+		            <li>
+			            @Html.ActionLink("Đơn hàng đang giao", "Import", "Order")
+		            </li>
+		            <li>
+			            @Html.ActionLink("Thống kê", "OutOfStock", "Order")
+		            </li>
+	            </ul>
+            </li>
+            <li>
+	            <a href="#">
+                    <i class="fa fa-user"></i>
+		            <span class="nav-label">Quản lý tài khoản</span>
+		            <span class="fa arrow"></span>
+	            </a>
+	            <ul class="nav nav-second-level">
+		            <li>
+			            @Html.ActionLink("Xem danh sách tài khoản", "Index", "Account")
+		            </li>
+		            <li>
+			            @Html.ActionLink("Tạo tài khoản mới", "Create", "Account")
+		            </li>
+		            <li>
+			            @Html.ActionLink("Đơn hàng đang giao", "Import", "Order")
+		            </li>
+		            <li>
+			            @Html.ActionLink("Thống kê", "OutOfStock", "Order")
+		            </li>
+	            </ul>
+            </li>
+        </ul>
+    </div>
+</nav>

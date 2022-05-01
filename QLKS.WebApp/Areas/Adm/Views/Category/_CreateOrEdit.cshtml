@@ -1,0 +1,110 @@
+﻿@model Category
+
+<div class="form-group">
+    @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+        @Html.EditorFor(model => model.Name, new
+        {
+            htmlAttributes = new
+            {
+                @class = "form-control",
+                id = "CategoryName"
+            }
+        })
+        @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(model => model.Alias, htmlAttributes: new
+    {
+        @class = "control-label col-md-2"
+    })
+    <div class="col-md-10">
+        @Html.EditorFor(model => model.Alias, new
+        {
+            htmlAttributes = new
+            {
+                @class = "form-control",
+                id = "Alias"
+            }
+        })
+        @Html.ValidationMessageFor(model => model.Alias, "", new { @class = "text-danger" })
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(model => model.Size, htmlAttributes: new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+        @Html.EditorFor(model => model.Size, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.ValidationMessageFor(model => model.Size, "", new { @class = "text-danger" })
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(model => model.Description, htmlAttributes: new
+    {
+        @class = "control-label col-md-2"
+    })
+    <div class="col-md-10">
+        @Html.EditorFor(model => model.Description, new
+        {
+            htmlAttributes = new
+            {
+                @class = "form-control",
+                rows = 3
+            }
+        })
+        @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.Label("Upload", htmlAttributes: new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+        @if (!string.IsNullOrEmpty(Model.IconPath))
+        {
+            <text>Hình hiện tại: </text>
+            <img src="@Url.Content(Model.IconPath)" alt="@Model.IconPath" class="img-responsive" style="max-width: 55px;"/>
+        }
+        else
+        {
+            <text>Chưa có hình đại diện. Chọn tập tin dể update</text>
+        }
+        <br />
+        @Html.HiddenFor(model => model.IconPath)
+        @(Html.TextBox("Upload", null, new
+		        {
+			        @class = "form-control",
+			        type = "file"
+
+		        }))
+        @(Html.ValidationMessageFor(model => model.IconPath, "", new { @class = "text-danger"}))
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(model => model.ParentLevel, htmlAttributes: new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+        @Html.EditorFor(model => model.ParentLevel, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.ValidationMessageFor(model => model.ParentLevel, "", new { @class = "text-danger" })
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(model => model.OrderNo, htmlAttributes: new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+        @Html.EditorFor(model => model.OrderNo, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.ValidationMessageFor(model => model.OrderNo, "", new { @class = "text-danger" })
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(model => model.Actived, htmlAttributes: new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+        <div class="checkbox">
+            @Html.EditorFor(model => model.Actived)
+            @Html.ValidationMessageFor(model => model.Actived, "", new { @class = "text-danger" })
+        </div>
+    </div>
+</div>
