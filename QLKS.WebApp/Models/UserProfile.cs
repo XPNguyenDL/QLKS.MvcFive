@@ -21,7 +21,7 @@ namespace QLKS.WebApp.Models
         [StringLength(200)]
         public string JobPosition { get; set; } //Chức vụ công việc
 
-        [Required, StringLength(100), RegularExpression(@"((?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%]).{8,40})")]
+        [Required, StringLength(100), RegularExpression(@"((?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,40})")]
         [DataType(DataType.Password)]
         [Display(Name = "Password")]
         public string Password { get; set; } // đặt password cho tài khoản
