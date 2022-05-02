@@ -1,144 +1,54 @@
 ﻿@model QLKS.WebApp.Models.Account
 
 @{
-    ViewBag.Title = "Create";
+	ViewBag.Title = "Create";
 }
 
-<h2>Create</h2>
-
-@using (Html.BeginForm()) 
+@section pluginStyles
 {
-    @Html.AntiForgeryToken()
-    
-    <div class="form-horizontal">
-
-
-	    <div class="form-group">
-		    @Html.LabelFor(model => model.Profile.FirstName, htmlAttributes: new { @class = "control-label col-md-2" })
-		    <div class="col-md-10">
-			    <div class="checkbox">
-				    @Html.EditorFor(model => model.Profile.FirstName)
-				    @Html.ValidationMessageFor(model => model.Profile.FirstName, "", new { @class = "text-danger" })
-			    </div>
-		    </div>
-	    </div>
-        
-	    <div class="form-group">
-		    @Html.LabelFor(model => model.Profile.LastName, htmlAttributes: new { @class = "control-label col-md-2" })
-		    <div class="col-md-10">
-			    <div class="checkbox">
-				    @Html.EditorFor(model => model.Profile.LastName)
-				    @Html.ValidationMessageFor(model => model.Profile.LastName, "", new { @class = "text-danger" })
-			    </div>
-		    </div>
-	    </div>
-
-	    <div class="form-group">
-            @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
-            </div>
-        </div>
-        
-        <div class="form-group">
-            @Html.LabelFor(model => model.Profile.Password, htmlAttributes: new { @class = "control-label col-md-2"})
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Profile.Password, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Profile.Password, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.PhoneNumber, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.PhoneNumber, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.PhoneNumber, "", new { @class = "text-danger" })
-            </div>
-        </div>
-        
-
-
-	    <div class="form-group">
-            @Html.LabelFor(model => model.TwoFactorEnabled, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                <div class="checkbox">
-                    @Html.EditorFor(model => model.TwoFactorEnabled)
-                    @Html.ValidationMessageFor(model => model.TwoFactorEnabled, "", new { @class = "text-danger" })
-                </div>
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.LockoutEndDateUtc, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.LockoutEndDateUtc, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.LockoutEndDateUtc, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.LockoutEnabled, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                <div class="checkbox">
-                    @Html.EditorFor(model => model.LockoutEnabled)
-                    @Html.ValidationMessageFor(model => model.LockoutEnabled, "", new { @class = "text-danger" })
-                </div>
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.AccessFailedCount, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.AccessFailedCount, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.AccessFailedCount, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.UserName, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.UserName, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.UserName, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
-            </div>
-        </div>
-    </div>
+	<link href="~/Content/plugins/iCheck/custom.css" rel="stylesheet" />
 }
+
+<div class="row">
+	<div class="col-md-12">
+		<div class="ibox float-e-margins">
+			<div class="ibox-title">
+				<h5>Tạo tài khoản</h5>
+			</div>
+
+			<div class="ibox-content p-sm">
+				@using (Html.BeginForm())
+				{
+					@Html.AntiForgeryToken()
+
+					<div class="form-horizontal">
+						@(Html.ValidationSummary(true, "", new { @class = "text-danger" }))
+						@Html.Partial("_CreateOrEdit", Model)
+						@Html.Partial("_Toolbar")
+					</div>
+				}
+
+			</div>
+		</div>
+	</div>
+</div>
 
 <div>
-    @Html.ActionLink("Back to List", "Index")
+	@Html.ActionLink("Back to List", "Index")
 </div>
 
 
 @section scripts
 {
 	@Scripts.Render("~/bundles/admjqueryval")
-    
+	
 	<script src="~/Scripts/plugins/iCheck/icheck.min.js"></script>
 	
 	<script type="text/javascript">
-		var lastNameValue = '';
-
-		$(document).ready(function() {
-			$('#CategotyName').on('change keyup paste mouseup',
-				function() {
-					var cateName = $('#CategotyName').val();
-					if (cateName != lastNameValue) {
-						$('#Alias').val(convertToUnsignChar(cateName));
-						lastNameValue = cateName;
-
-					}
-				});
+		$(function() {
 			$('.i-checks').iCheck({
 				checkboxClass: 'icheckbox_square-green'
 			});
-
 		});
 	</script>
 }

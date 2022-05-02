@@ -1,9 +1,25 @@
 ﻿
 @model QLKS.WebApp.Models.Account
 
-@{
-    ViewBag.Title = "Create";
-}
+<div class="form-group">
+    @Html.LabelFor(model => model.Profile.FirstName, htmlAttributes: new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+        <div class="checkbox">
+            @Html.EditorFor(model => model.Profile.FirstName)
+            @Html.ValidationMessageFor(model => model.Profile.FirstName, "", new { @class = "text-danger" })
+        </div>
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(model => model.Profile.LastName, htmlAttributes: new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+        <div class="checkbox">
+            @Html.EditorFor(model => model.Profile.LastName)
+            @Html.ValidationMessageFor(model => model.Profile.LastName, "", new { @class = "text-danger" })
+        </div>
+    </div>
+</div>
 
 <div class="form-group">
     @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -13,15 +29,6 @@
     </div>
 </div>
 
-<div class="form-group">
-    @Html.LabelFor(model => model.EmailConfirmed, htmlAttributes: new { @class = "control-label col-md-2" })
-    <div class="col-md-10">
-        <div class="checkbox">
-            @Html.EditorFor(model => model.EmailConfirmed)
-            @Html.ValidationMessageFor(model => model.EmailConfirmed, "", new { @class = "text-danger" })
-        </div>
-    </div>
-</div>
 
 <div class="form-group">
     @Html.LabelFor(model => model.PhoneNumber, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -31,6 +38,7 @@
     </div>
 </div>
 
+
 <div class="form-group">
     @Html.LabelFor(model => model.UserName, htmlAttributes: new { @class = "control-label col-md-2" })
     <div class="col-md-10">
@@ -39,16 +47,11 @@
     </div>
 </div>
 
-<div class="form-group">
-    @Html.LabelFor(model => model.Profile.FirstName, htmlAttributes: new { @class = "control-label col-md-2" })
-    <div class="col-md-10">
-        @Html.EditorFor(model => model.Profile.FirstName, new { htmlAttributes = new { @class = "form-control" } })
-        @Html.ValidationMessageFor(model => model.Profile.FirstName, "", new { @class = "text-danger" })
-    </div>
-</div>
 
 <div class="form-group">
-    <div class="col-md-offset-2 col-md-10">
-        <input type="submit" value="Create" class="btn btn-default" />
+    @Html.LabelFor(model => model.Profile.Password, htmlAttributes: new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+        @Html.EditorFor(model => model.Profile.Password, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.ValidationMessageFor(model => model.Profile.Password, "", new { @class = "text-danger" })
     </div>
 </div>
