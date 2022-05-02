@@ -93,6 +93,7 @@ namespace QLKS.WebApp.Areas.Adm.Controllers
                         userManager.AddToRole(accounts.Id, managerRole);
                     }
                     return RedirectToAction("Index");
+                    /// ahihi
                 }
             }
             catch (Exception e)
