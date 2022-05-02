@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
 using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using PagedList;
@@ -62,25 +63,36 @@ namespace QLKS.WebApp.Areas.Adm.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(FormCollection upload)
+        public ActionResult Create(FormCollection data, QLKS.WebApp.DAL.HotelDbContext context)
         {
             var accounts = new Account();
+            var userManager = new UserManager<Account>(new UserStore<Account>(context));
+            var roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>());
+            const string adminRole = "Admin",
+                managerRole = "Manager",
+                saleRole = "Salesman",
+                customerRole = "Customer";
             try
             {
                 UpdateModel(accounts, new[]
                 {
-                    "Profile.AccountID", "UserName", "Email", "Profile.Password", "PhoneNumber",
+                    "UserName", "Email", "PhoneNumber", "Profile"
                 });
-                if (db.IdentityUsers.SingleOrDefault(x => x.UserName == accounts.Email && x.Profile.AccountID != accounts.Profile.AccountID) != null)
+                if (db.IdentityUsers.SingleOrDefault(x => x.UserName == accounts.UserName && x.Id != accounts.Id) != null)
                 {
                     ModelState.AddModelError("UserName", "UserName này đã tồn tại!!!");
                 }
                 if (ModelState.IsValid)
                 {
                     accounts.Profile.AccountID = Guid.NewGuid().ToString();
-                    db.Users.Add(accounts);
-                    db.SaveChanges();
-                    return Redirect(accounts.Profile.AccountID);
+
+                    var result = userManager.Create(accounts, accounts.Profile.Password);
+                    if (result.Succeeded)
+                    {
+                        userManager.AddToRole(accounts.Id, adminRole);
+                        userManager.AddToRole(accounts.Id, managerRole);
+                    }
+                    return RedirectToAction("Index");
                 }
             }
             catch (Exception e)
