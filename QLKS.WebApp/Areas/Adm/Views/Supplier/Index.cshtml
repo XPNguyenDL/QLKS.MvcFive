@@ -15,14 +15,10 @@
 		<div class="ibox-title">
 			<h5>Danh sách nhà cung cấp</h5>
 			<div class="ibox-tools">
-				@*@(Html.Bootstrap()
+				@(Html.Bootstrap()
 					.ActionLink("Thêm công ty mới", "Create")
 					.Class("btn btn-primary btn-xs")
-					.PrependIcon("fa fa-plus"))*@
-				<span class="">
-					@Html.ActionLink("Thêm công ty mới", "Create", null, new {@class = "btn btn-primary btn-xs" })
-					<i class="fa fa-plus"></i>
-				</span>
+					.PrependIcon("fa fa-plus"))
 			</div>
 		</div>
 

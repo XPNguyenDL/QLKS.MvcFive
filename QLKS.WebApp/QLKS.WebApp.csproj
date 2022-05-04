@@ -457,6 +457,7 @@
     <Content Include="Areas\Adm\Views\Account\Index.cshtml" />
     <Content Include="Areas\Adm\Views\Account\_CreateOrEdit.cshtml" />
     <Content Include="Areas\Adm\Views\Account\Create.cshtml" />
+    <Content Include="Areas\Adm\Views\Account\Edit.cshtml" />
     <None Include="Scripts\jquery-3.6.0.intellisense.js" />
     <Content Include="Scripts\hotelJs\js\animated.headline.js" />
     <Content Include="Scripts\hotelJs\js\bootstrap.min.js" />

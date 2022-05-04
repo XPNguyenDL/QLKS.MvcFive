@@ -12,64 +12,82 @@
 }
 
 <div class="row">
-    <div class="ibox float-e-margins">
-        <div class="ibox-content p-sm">
-           
-            <!-- Phẩn hiển thị danh sách nhà cung cấp -->
-            <table id="#tblaccount" class="table table-responsive table-bordered table-hover">
+	<div class="ibox-title">
+		<h5>Danh sách nhà cung cấp</h5>
+		<div class="ibox-tools">
+			@(Html.Bootstrap()
+				.ActionLink("Thêm tài khoản mới", "Create")
+				.Class("btn btn-primary btn-xs")
+				.PrependIcon("fa fa-plus"))
+		</div>
+	</div>
+	<div class="ibox float-e-margins">
+		<div class="ibox-content p-sm">
+
+			<!-- Phẩn hiển thị danh sách nhà cung cấp -->
+			<table id="#tblaccount" class="table table-responsive table-bordered table-hover">
                 <tr>
-                    <th>
+                    <th  width="15%">
                         @Html.DisplayNameFor(model => model.Profile.FullName)
                     </th>
-                    <th>
+                    <th class="hidden-sm hidden-xs" width="20%">
                         @Html.DisplayNameFor(model => model.Email)
                     </th>
-                    <th>
+                    <th class="hidden-sm hidden-xs" >
                         @Html.DisplayNameFor(model => model.PhoneNumber)
                     </th>
                     <th>
                         @Html.DisplayNameFor(model => model.UserName)
                     </th>
-                    <th></th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Profile.Picture)
+                    </th>
+                    <th class="hidden-sm hidden-xs"></th>
                 </tr>
 
-                @foreach (var item in Model)
-                {
-                    <tr>
+				@foreach (var item in Model)
+				{
+            <tr style="height: 67px" class="align-center">
 
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Profile.FullName)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Email)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.PhoneNumber)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.UserName)
-                        </td>
-                        <td>
-                            @(Html.Bootstrap()
-							    .ActionLink("", "Edit")
-							    .RouteValues(new {id = item.Profile.AccountID})
-							    .Title("Cập nhật")
-							    .AppendIcon("fa fa-pencil fa-2x"))
-                            @(Html.Bootstrap()
-							    .ActionLink("", "GetBySupplierId", "Product")
-							    .Class("ajax-link")
-							    .RouteValues(new {id = item.Profile.AccountID})
-							    .AppendIcon("fa fa-gift fa-2x")
-							    .Title("Xem danh sách sản phẩm"))
-                        </td>
-                    </tr>
-                }
+                <td>
+                    @Html.DisplayFor(modelItem => item.Profile.FullName)
+                </td>
+                <td class="hidden-sm hidden-xs"> 
+                    @Html.DisplayFor(modelItem => item.Email)
+                </td>
+                <td class="hidden-sm hidden-xs">
+                    @Html.DisplayFor(modelItem => item.PhoneNumber)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.UserName)
+                </td>
+	            <td class="text-center">
+		            @if (!string.IsNullOrEmpty(item.Profile.Picture))
+		            {
+			            <img src="@Url.Content(item.Profile.Picture)" alt="@item.Profile.Picture" class="img-circle" style="height: 50px; width: 50px"/>
+		            }
+	            </td>
+                <td>
+                    @(Html.Bootstrap()
+								.ActionLink("", "Edit")
+								.RouteValues(new {id = item.Profile.AccountID})
+								.Title("Cập nhật")
+								.AppendIcon("fa fa-pencil fa-2x"))
+                    @(Html.Bootstrap()
+								.ActionLink("", "GetBySupplierId", "Product")
+								.Class("ajax-link")
+								.RouteValues(new {id = item.Profile.AccountID})
+								.AppendIcon("fa fa-gift fa-2x")
+								.Title("Xem danh sách sản phẩm"))
+                </td>
+            </tr>
+				}
 
-            </table>
-            
-            
-        </div>
-    </div>
+			</table>
+
+
+		</div>
+	</div>
 </div>
 
 
@@ -77,28 +95,28 @@
 @section scripts
 {
     <script type="text/javascript">
-        $(document).ready(function () {
-            $('#tblaccount tr ').on("click",
-                "[data-toggle-stale = true]",
-                function (e) {
-                    var $this = $(this);
-                    var url = $this.attr('data-url');
-                    var args = $this.attr('data-args');
-                    $.post(url,
-                        { "args": args },
-                        function (data) {
-                            if (data.Result) {
-                                $this.attr('data-args', data.Message);
-                                $this.toggleClass('true');
-                            } else {
-                                alert(data.Message);
-                            }
-                        });
-                });
-            $('#pageSelect').change(function () {
-                $('#pageSize').val($(this).val());
-                $('#searchSupplier').submit();
-            })
-        })
+	    $(document).ready(function() {
+		    $('#tblaccount tr ').on("click",
+			    "[data-toggle-stale = true]",
+			    function(e) {
+				    var $this = $(this);
+				    var url = $this.attr('data-url');
+				    var args = $this.attr('data-args');
+				    $.post(url,
+					    { "args": args },
+					    function(data) {
+						    if (data.Result) {
+							    $this.attr('data-args', data.Message);
+							    $this.toggleClass('true');
+						    } else {
+							    alert(data.Message);
+						    }
+					    });
+			    });
+		    $('#pageSelect').change(function() {
+			    $('#pageSize').val($(this).val());
+			    $('#searchSupplier').submit();
+		    });
+	    });
     </script>
 }
