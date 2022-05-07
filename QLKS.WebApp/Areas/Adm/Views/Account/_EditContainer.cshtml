@@ -1,0 +1,100 @@
+﻿
+@using Microsoft.AspNet.Identity.EntityFramework
+@model QLKS.WebApp.Models.Account
+
+
+<div class="row">
+    <div class="col-md-6 m-b-sm">
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.UserName, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.UserName, new { htmlAttributes = new { @class = "form-control"} })
+                @Html.ValidationMessageFor(model => model.UserName, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="hr-line-dashed"></div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Profile.FirstName, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <div class="checkbox">
+                    @Html.EditorFor(model => model.Profile.FirstName)
+                    @Html.ValidationMessageFor(model => model.Profile.FirstName, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+
+	    <div class="form-group">
+		    @Html.LabelFor(model => model.Profile.LastName, htmlAttributes: new { @class = "control-label col-md-2" })
+		    <div class="col-md-10">
+			    <div class="checkbox">
+				    @Html.EditorFor(model => model.Profile.LastName)
+				    @Html.ValidationMessageFor(model => model.Profile.LastName, "", new { @class = "text-danger" })
+			    </div>
+		    </div>
+	    </div>
+        
+	    <div class="hr-line-dashed"></div>
+
+	    <div class="form-group">
+            @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.PhoneNumber, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.PhoneNumber, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.PhoneNumber, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+	    <div class="hr-line-dashed"></div>
+
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Roles, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <select class="selectpicker" name="roleTemps" multiple data-live-search="true">
+                    @foreach (var item in (List<IdentityRole>)ViewBag.Roles)
+                    {
+                        <option value="@item.Id">@item.Name</option>
+                    }
+                </select>
+            </div>
+        </div>
+    </div>
+	<div class="col-md-6">
+		<div class="form-group">
+			@Html.Label("Upload", htmlAttributes: new { @class = "control-label col-md-2" })
+			<div class="col-md-10">
+				@if (!string.IsNullOrEmpty(Model.Profile.Picture))
+				{
+					<text>Hình hiện tại: </text>
+					<img src="@Url.Content(Model.Profile.Picture)" alt="@Model.Profile.Picture" class="img-responsive" style="max-width: 55px;"/>
+				}
+				else
+				{
+					<text>Chưa có hình đại diện. Chọn tập tin dể update</text>
+				}
+
+				<br />
+				@Html.HiddenFor(model => model.Profile.Picture)
+				@(Html.TextBox("Upload", null, new
+				{
+					@class = "form-control",
+					type = "file"
+
+				}))
+				@(Html.ValidationMessageFor(model => model.Profile.Picture, "", new { @class = "text-danger"}))
+			</div>
+		</div>
+	</div>
+</div>
+

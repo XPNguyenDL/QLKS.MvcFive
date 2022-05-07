@@ -1,57 +1,60 @@
 ﻿@model QLKS.WebApp.Models.Account
 
 @{
-	ViewBag.Title = "Create";
+    ViewBag.Title = "Create";
 }
 
 @section pluginStyles
 {
-	<link href="~/Content/plugins/iCheck/custom.css" rel="stylesheet" />
+    <link href="~/Content/plugins/iCheck/custom.css" rel="stylesheet" />
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/css/bootstrap-select.css" />
 }
 
 <div class="row">
-	<div class="col-md-12">
-		<div class="ibox float-e-margins">
-			<div class="ibox-title">
-				<h5>Tạo tài khoản</h5>
-			</div>
+    <div class="col-md-12">
+        <div class="ibox float-e-margins">
+            <div class="ibox-title">
+                <h5>Tạo tài khoản</h5>
+            </div>
 
-			<div class="ibox-content p-sm">
-				@using (Html.BeginForm("Create","Account",FormMethod.Post, new  
-				{  
-					enctype = "multipart/form-data"  
-				}))
-				{
-					@Html.AntiForgeryToken()
+            <div class="ibox-content p-sm">
+                @using (Html.BeginForm("Create", "Account", FormMethod.Post, new
+                {
+                    enctype = "multipart/form-data"
+                }))
+                {
+                    @Html.AntiForgeryToken()
 
-					<div class="form-horizontal">
-						@(Html.ValidationSummary(true, "", new { @class = "text-danger" }))
-						@Html.Partial("_CreateOrEdit", Model)
-						@Html.Partial("_Toolbar")
-					</div>
-				}
+                    <div class="form-horizontal">
+                        @(Html.ValidationSummary(true, "", new { @class = "text-danger" }))
+                        @Html.Partial("_CreateContainer", Model)
+                        @Html.Partial("_Toolbar")
+                    </div>
+                }
 
-			</div>
-		</div>
-	</div>
+            </div>
+        </div>
+    </div>
 </div>
 
 <div>
-	@Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Back to List", "Index")
 </div>
 
 
 @section scripts
 {
-	@Scripts.Render("~/bundles/admjqueryval")
-	
-	<script src="~/Scripts/plugins/iCheck/icheck.min.js"></script>
-	
-	<script type="text/javascript">
-		$(function() {
-			$('.i-checks').iCheck({
-				checkboxClass: 'icheckbox_square-green'
-			});
-		});
-	</script>
+    @Scripts.Render("~/bundles/admjqueryval")
+
+    <script src="~/Scripts/plugins/iCheck/icheck.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/js/bootstrap-select.min.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            $('select').selectpicker();
+
+        });
+    </script>
 }

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity;
 using System.Security.Claims;
 using System.Threading.Tasks;
@@ -21,7 +22,12 @@ namespace QLKS.WebApp.Models
         public virtual IList<Order> BuyOrders { get; set; }
         public virtual IList<Order> HandleOrder { get; set; }
 
+
         public virtual IList<Comment> Comments { get; set; }
         public virtual IList<ProductHistory> ProductHistories { get; set; }
+
+
+        [NotMapped]
+        public List<string> RoleTemps { get; set; }
     }
 }

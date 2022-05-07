@@ -455,9 +455,10 @@
     <Content Include="Areas\Adm\Views\Category\Create.cshtml" />
     <Content Include="Areas\Adm\Views\Category\Edit.cshtml" />
     <Content Include="Areas\Adm\Views\Account\Index.cshtml" />
-    <Content Include="Areas\Adm\Views\Account\_CreateOrEdit.cshtml" />
+    <Content Include="Areas\Adm\Views\Account\_CreateContainer.cshtml" />
     <Content Include="Areas\Adm\Views\Account\Create.cshtml" />
     <Content Include="Areas\Adm\Views\Account\Edit.cshtml" />
+    <Content Include="Areas\Adm\Views\Account\_EditContainer.cshtml" />
     <None Include="Scripts\jquery-3.6.0.intellisense.js" />
     <Content Include="Scripts\hotelJs\js\animated.headline.js" />
     <Content Include="Scripts\hotelJs\js\bootstrap.min.js" />

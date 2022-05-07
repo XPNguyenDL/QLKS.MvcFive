@@ -9,6 +9,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
+using Newtonsoft.Json;
 using PagedList;
 using QLKS.WebApp.DAL;
 using QLKS.WebApp.Models;
@@ -59,7 +60,8 @@ namespace QLKS.WebApp.Areas.Adm.Controllers
         // GET: Adm/Account/Create
         public ActionResult Create()
         {
-            
+            var roles = db.Roles.ToList();
+            ViewBag.Roles = roles;
             return View();
         }
 
@@ -69,16 +71,13 @@ namespace QLKS.WebApp.Areas.Adm.Controllers
         {
             var accounts = new Account();
             var userManager = new UserManager<Account>(new UserStore<Account>(context));
-            var roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>());
-            const string adminRole = "Admin",
-                managerRole = "Manager",
-                saleRole = "Salesman",
-                customerRole = "Customer";
+            var roles = db.Roles.ToList();
+            ViewBag.Roles = roles;
             try
             {
                 UpdateModel(accounts, new[]
                 {
-                    "UserName", "Email", "PhoneNumber", "Profile"
+                    "UserName", "Email", "PhoneNumber", "Profile", "RoleTemps"
                 });
                 if (db.IdentityUsers.SingleOrDefault(x => x.UserName == accounts.UserName && x.Id != accounts.Id) != null)
                 {
@@ -86,16 +85,19 @@ namespace QLKS.WebApp.Areas.Adm.Controllers
                 }
                 if (ModelState.IsValid)
                 {
-
+                    
                     accounts.Profile.AccountID = Guid.NewGuid().ToString();
 
                     SaveUpLoadFile(upload, accounts);
                     
                     var result = userManager.Create(accounts, accounts.Profile.Password);
+                    
                     if (result.Succeeded)
                     {
-                        userManager.AddToRole(accounts.Id, adminRole);
-                        userManager.AddToRole(accounts.Id, managerRole);
+                        foreach (var nameTemp in accounts.RoleTemps)
+                        {
+                            userManager.AddToRole(accounts.Id, nameTemp);
+                        }
                     }
                     return RedirectToAction("Index");
                 }
@@ -104,6 +106,7 @@ namespace QLKS.WebApp.Areas.Adm.Controllers
             {
                 ModelState.AddModelError("", e.Message);
             }
+            
             return View(accounts);
         }
 
@@ -178,8 +181,62 @@ namespace QLKS.WebApp.Areas.Adm.Controllers
             {
                 return HttpNotFound();
             }
-
+            
+            var roleId = accounts.Roles.Select(s => s.RoleId).ToList();
+            var roles = db.Roles.ToList();
+            ViewBag.Roles = roles;
+            var roleText = JsonConvert.SerializeObject(roleId);
+            ViewBag.RoleId = roleText;
+           // ViewBag.RoleId = roleId;
             return View(accounts);
         }
+
+        
+
+        // Post: adm/account/edit/id
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Edit(HttpPostedFileBase upload,
+            [Bind(Include = "UserName, Email, PhoneNumber, Profile, RoleTemps")]
+            Account account, HotelDbContext context)
+        {
+            var userManager = new UserManager<Account>(new UserStore<Account>(context));
+            var roles = db.Roles.ToList();
+            ViewBag.Roles = roles;
+            try
+            {
+
+                if (!ModelState.IsValid)
+                {
+
+                    foreach (var nameTemp in roles)
+                    {
+                        userManager.RemoveFromRole(account.Id, nameTemp.Name);
+                    }
+
+                    SaveUpLoadFile(upload, account);
+
+                    var result = userManager.Update(account);
+                    
+                    
+
+                    if (result.Succeeded)
+                    {
+                        foreach (var nameTemp in account.RoleTemps)
+                        {
+                            userManager.AddToRole(account.Id, nameTemp);
+                        }
+                    }
+                    return RedirectToAction("Index");
+                }
+            }
+            catch (Exception e)
+            {
+                ModelState.AddModelError("", e.Message);
+            }
+
+            return View(account);
+        }
+
     }
 }
