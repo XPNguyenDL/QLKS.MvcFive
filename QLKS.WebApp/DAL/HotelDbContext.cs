@@ -30,6 +30,7 @@ namespace QLKS.WebApp.DAL
         public DbSet<ProductHistory> ProductHistories { get; set; }
         public DbSet<Picture> Pictures { get; set; }
         public DbSet<Comment> Comments { get; set; }
+        public DbSet<IdentityUserRole> UserInRoles { get; set; }
 
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)

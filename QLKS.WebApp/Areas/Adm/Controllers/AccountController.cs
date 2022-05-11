@@ -1,7 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Data.Entity;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
@@ -37,7 +40,7 @@ namespace QLKS.WebApp.Areas.Adm.Controllers
         public ActionResult Index()
         {
             var accounts = db.IdentityUsers.ToList();
-            
+
             return View(accounts);
         }
         private IAuthenticationManager AuthenticationManager
@@ -85,13 +88,13 @@ namespace QLKS.WebApp.Areas.Adm.Controllers
                 }
                 if (ModelState.IsValid)
                 {
-                    
+
                     accounts.Profile.AccountID = Guid.NewGuid().ToString();
 
                     SaveUpLoadFile(upload, accounts);
-                    
+
                     var result = userManager.Create(accounts, accounts.Profile.Password);
-                    
+
                     if (result.Succeeded)
                     {
                         foreach (var nameTemp in accounts.RoleTemps)
@@ -106,7 +109,7 @@ namespace QLKS.WebApp.Areas.Adm.Controllers
             {
                 ModelState.AddModelError("", e.Message);
             }
-            
+
             return View(accounts);
         }
 
@@ -167,8 +170,10 @@ namespace QLKS.WebApp.Areas.Adm.Controllers
             }
         }
 
+
         // Post: adm/account/Edit/5
         public ActionResult Edit(string id)
+
         {
             var accounts = new Account();
             if (id == null)
@@ -176,57 +181,64 @@ namespace QLKS.WebApp.Areas.Adm.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            accounts = db.IdentityUsers.Find(id.ToString());
+            accounts = db.IdentityUsers.Find(id);
             if (accounts == null)
             {
                 return HttpNotFound();
             }
-            
+
             var roleId = accounts.Roles.Select(s => s.RoleId).ToList();
             var roles = db.Roles.ToList();
             ViewBag.Roles = roles;
             var roleText = JsonConvert.SerializeObject(roleId);
             ViewBag.RoleId = roleText;
-           // ViewBag.RoleId = roleId;
+            // ViewBag.RoleId = roleId;
             return View(accounts);
         }
 
-        
+
 
         // Post: adm/account/edit/id
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(HttpPostedFileBase upload,
-            [Bind(Include = "UserName, Email, PhoneNumber, Profile, RoleTemps")]
-            Account account, HotelDbContext context)
+        public async Task<ActionResult> Edit(HttpPostedFileBase upload,
+            [Bind(Include = "Id, UserName, Email, PhoneNumber, Profile, RoleTemps")]
+            Account account, HotelDbContext context, string id)
         {
             var userManager = new UserManager<Account>(new UserStore<Account>(context));
             var roles = db.Roles.ToList();
             ViewBag.Roles = roles;
+
+
+
+            var tempAccount = db.IdentityUsers.Find(id);
             try
             {
 
                 if (!ModelState.IsValid)
                 {
-
-                    foreach (var nameTemp in roles)
-                    {
-                        userManager.RemoveFromRole(account.Id, nameTemp.Name);
-                    }
-
+                    //  DeleteRoles(temp, tempAccount);
                     SaveUpLoadFile(upload, account);
-
-                    var result = userManager.Update(account);
                     
-                    
+                    //userManager.Update()
 
-                    if (result.Succeeded)
+                    db.SaveChanges();
+                    var oldRole = db.UserInRoles.Where(s => s.UserId == id).ToList();
+                    foreach (var role in oldRole)
                     {
-                        foreach (var nameTemp in account.RoleTemps)
-                        {
-                            userManager.AddToRole(account.Id, nameTemp);
-                        }
+                        db.Entry(role).State = EntityState.Deleted;
                     }
+                    db.SaveChanges();
+                    foreach (var item in account.RoleTemps)
+                    {
+                        db.UserInRoles.Add(new IdentityUserRole()
+                        {
+                            RoleId = item,
+                            UserId = id
+                        });
+                    }
+
+                    db.SaveChanges();
                     return RedirectToAction("Index");
                 }
             }
@@ -238,5 +250,14 @@ namespace QLKS.WebApp.Areas.Adm.Controllers
             return View(account);
         }
 
+        private void DeleteRoles(List<IdentityUserRole> userRoles, Account temp)
+        {
+            for (int i = 0; i < userRoles.Count; i++)
+            {
+                temp.Roles.Remove(userRoles[i]);
+            }
+
+            db.SaveChanges();
+        }
     }
 }
