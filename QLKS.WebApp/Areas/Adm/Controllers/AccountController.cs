@@ -217,10 +217,13 @@ namespace QLKS.WebApp.Areas.Adm.Controllers
 
                 if (!ModelState.IsValid)
                 {
+                    tempAccount.Profile.FirstName = account.Profile.FirstName;
+                    db.Entry(tempAccount).State = EntityState.Modified;
+                    db.SaveChanges();
+
                     //  DeleteRoles(temp, tempAccount);
                     SaveUpLoadFile(upload, account);
                     
-                    //userManager.Update()
 
                     db.SaveChanges();
                     var oldRole = db.UserInRoles.Where(s => s.UserId == id).ToList();
