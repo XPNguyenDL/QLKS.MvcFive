@@ -1190,3 +1190,8 @@ h1, h2, h3, h4, h5, h6 {
     padding-left: calc(var(--bs-gutter-x) * 0.5);
     margin-top: var(--bs-gutter-y);
 }*/
+
+.dashboard .lamp-card .card-icon {
+    color: #198754;
+    background: rgb(190, 248, 232);
+}
