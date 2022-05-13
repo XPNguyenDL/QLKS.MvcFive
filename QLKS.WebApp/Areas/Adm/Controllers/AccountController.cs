@@ -214,34 +214,37 @@ namespace QLKS.WebApp.Areas.Adm.Controllers
             var tempAccount = db.IdentityUsers.Find(id);
             try
             {
-
+                if (db.IdentityUsers.SingleOrDefault(x => x.UserName == account.UserName && x.Id != account.Id) != null)
+                {
+                    ModelState.AddModelError("UserName", "UserName này đã tồn tại!!!");
+                }
                 if (!ModelState.IsValid)
                 {
-                    tempAccount.Profile.FirstName = account.Profile.FirstName;
+                    UpdateAccount(tempAccount, account);
                     db.Entry(tempAccount).State = EntityState.Modified;
                     db.SaveChanges();
-
                     //  DeleteRoles(temp, tempAccount);
-                    SaveUpLoadFile(upload, account);
-                    
+                    SaveUpLoadFile(upload, tempAccount);
+                    db.SaveChanges();
 
-                    db.SaveChanges();
-                    var oldRole = db.UserInRoles.Where(s => s.UserId == id).ToList();
-                    foreach (var role in oldRole)
+                    if (account.RoleTemps != null)
                     {
-                        db.Entry(role).State = EntityState.Deleted;
-                    }
-                    db.SaveChanges();
-                    foreach (var item in account.RoleTemps)
-                    {
-                        db.UserInRoles.Add(new IdentityUserRole()
+                        var oldRole = db.UserInRoles.Where(s => s.UserId == id).ToList();
+                        foreach (var role in oldRole)
                         {
-                            RoleId = item,
-                            UserId = id
-                        });
+                            db.Entry(role).State = EntityState.Deleted;
+                        }
+                        db.SaveChanges();
+                        foreach (var item in account.RoleTemps)
+                        {
+                            db.UserInRoles.Add(new IdentityUserRole()
+                            {
+                                RoleId = item,
+                                UserId = id
+                            });
+                        }
+                        db.SaveChanges();
                     }
-
-                    db.SaveChanges();
                     return RedirectToAction("Index");
                 }
             }
@@ -261,6 +264,20 @@ namespace QLKS.WebApp.Areas.Adm.Controllers
             }
 
             db.SaveChanges();
+        }
+
+        private void UpdateAccount(Account accountTemp, Account accountUpdate)
+        {
+            
+            accountTemp.UserName = accountUpdate.UserName;
+
+
+            accountTemp.Email = accountUpdate.Email;
+            accountTemp.PhoneNumber = accountUpdate.PhoneNumber;
+            accountTemp.Profile.FirstName = accountUpdate.Profile.FirstName;
+            accountTemp.Profile.LastName = accountUpdate.Profile.LastName;
+            accountTemp.Profile.Picture = accountUpdate.Profile.Picture;
+
         }
     }
 }
