@@ -8,6 +8,9 @@
 {
     <link href="~/Content/PagedList.css" rel="stylesheet" />
     <link href="~/Content/AdmGrid.css" rel="stylesheet" />
+    <link href="~/Content/plugins/dataTables/dataTables.bootstrap.css" rel="stylesheet" />
+    <link href="~/Content/plugins/dataTables/dataTables.responsive.css" rel="stylesheet" />
+    <link href="~/Content/plugins/dataTables/dataTables.tableTools.min.css" rel="stylesheet" />
 
 }
 
@@ -25,63 +28,68 @@
         <div class="ibox-content p-sm">
 
             <!-- Phẩn hiển thị danh sách nhà cung cấp -->
-            <table id="#tblaccount" class="table table-responsive table-bordered table-hover">
-	            <tr>
-		            <th width="15%">
-			            @Html.DisplayNameFor(model => model.Profile.FullName)
-		            </th>
-		            <th class="hidden-sm hidden-xs" width="20%">
-			            @Html.DisplayNameFor(model => model.Email)
-		            </th>
-		            <th class="hidden-sm hidden-xs">
-			            @Html.DisplayNameFor(model => model.PhoneNumber)
-		            </th>
-		            <th>
-			            @Html.DisplayNameFor(model => model.UserName)
-		            </th>
-		            <th>
-			            @Html.DisplayNameFor(model => model.Profile.Picture)
-		            </th>
-		            <th class="hidden-sm hidden-xs"></th>
-	            </tr>
+            <table id="pagedtable" class="table table-responsive table-bordered table-hover">
+                <thead>
+                    <tr>
+                        <th width="15%">
+                            @Html.DisplayNameFor(model => model.Profile.FullName)
+                        </th>
+                        <th class="hidden-sm hidden-xs" width="20%">
+                            @Html.DisplayNameFor(model => model.Email)
+                        </th>
+                        <th class="hidden-sm hidden-xs">
+                            @Html.DisplayNameFor(model => model.PhoneNumber)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.UserName)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Profile.Picture)
+                        </th>
+                        <th class="hidden-sm hidden-xs" style="width: 10%"></th>
+                    </tr>
 
-	            @foreach (var item in Model)
-	            {
-		            <tr style="height: 67px" class="align-center">
+                </thead>
+                <tbody>
 
-			            <td>
-				            @Html.DisplayFor(modelItem => item.Profile.FullName)
-			            </td>
-			            <td class="hidden-sm hidden-xs">
-				            @Html.DisplayFor(modelItem => item.Email)
-			            </td>
-			            <td class="hidden-sm hidden-xs">
-				            @Html.DisplayFor(modelItem => item.PhoneNumber)
-			            </td>
-			            <td>
-				            @Html.DisplayFor(modelItem => item.UserName)
-			            </td>
-			            <td class="text-center">
-				            @if (!string.IsNullOrEmpty(item.Profile.Picture))
-				            {
-					            <img src="@Url.Content(item.Profile.Picture)" alt="@item.Profile.Picture" class="img-circle" style="height: 50px; width: 50px" />
-				            }
-			            </td>
-			            <td>
-				            @(Html.Bootstrap()
+                    @foreach (var item in Model)
+                    {
+                        <tr style="height: 67px" class="align-center">
+
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Profile.FullName)
+                            </td>
+                            <td class="hidden-sm hidden-xs">
+                                @Html.DisplayFor(modelItem => item.Email)
+                            </td>
+                            <td class="hidden-sm hidden-xs">
+                                @Html.DisplayFor(modelItem => item.PhoneNumber)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.UserName)
+                            </td>
+                            <td class="text-center">
+                                @if (!string.IsNullOrEmpty(item.Profile.Picture))
+                                {
+                                    <img src="@Url.Content(item.Profile.Picture)" alt="@item.Profile.Picture" class="img-circle" style="height: 50px; width: 50px" />
+                                }
+                            </td>
+                            <td>
+                                @(Html.Bootstrap()
 					            .ActionLink("", "Edit")
 					            .RouteValues(new {id = item.Profile.AccountID})
 					            .Title("Cập nhật")
 					            .AppendIcon("fa fa-pencil fa-2x"))
-				            @(Html.Bootstrap()
+                                @(Html.Bootstrap()
 					            .ActionLink("", "Delete")
 					            .Class("dz-remove")
-					            .RouteValues(new { id = item.Id})
-					            .AppendIcon("fa fa-trash-o")
+					            .RouteValues(new {id = item.Id})
+					            .AppendIcon("fa-solid fa-trash-can fa-2x")
 					            .Title("Xóa"))
-			            </td>
-		            </tr>
-	            }
+                            </td>
+                        </tr>
+                    }
+                </tbody>
 
             </table>
         </div>
@@ -92,29 +100,58 @@
 
 @section scripts
 {
+    <script src="~/Scripts/plugins/dataTables/jquery.dataTables.js"></script>
+    <script src="~/Scripts/plugins/dataTables/dataTables.responsive.js"></script>
+    <script src="~/Scripts/plugins/dataTables/dataTables.bootstrap.js"></script>
+
+
     <script type="text/javascript">
         $(document).ready(function () {
-            $('#tblaccount tr ').on("click",
-                "[data-toggle-stale = true]",
+            var pageTable = $('#pagedtable').dataTable({
+                responsive: true,
+                "order": [[1, 'asc']],
+                "language": {
+                    "paginate": {
+                        "first": "Đầu",
+                        "previous": "Trước",
+                        "next": "Tiếp",
+                        "last": "Cuối"
+                    },
+                    "info": "Hiển thị _START_ đến _END_ trong số _TOTAL_ mẫu tin",
+                    "search": "Tìm theo từ khóa: ",
+                    "lengthMenu": "Hiển thi _MENU_ mẫu tin"
+                },
+                "dom": 'T<"clear">lfrtip',
+                "tableTools": {
+                    "sSwfPath": "/Scripts/plugins/dataTables/copy_csv_xls_pdf.swf"
+                }
+            });
+            $('#pagedtable tbody').on('click',
+                'a.dz-remove',
                 function (e) {
-                    var $this = $(this);
-                    var url = $this.attr('data-url');
-                    var args = $this.attr('data-args');
-                    $.post(url,
-                        { "args": args },
-                        function (data) {
-                            if (data.Result) {
-                                $this.attr('data-args', data.Message);
-                                $this.toggleClass('true');
-                            } else {
-                                alert(data.Message);
+                    alert('Heloo');
+                    e.preventDefault();
+                    var that = $(this);
+                    var confirmResult = confirm("Bạn có thực sự muốn xóa tài khoản này?");
+                    if (confirmResult) {
+                        $.ajax({
+                            type: "POST",
+                            url: that.attr('href'),
+                            success: function (response) {
+                                if (response) {
+                                    var row = that.closest('tr').get(0);
+                                    pageTable.fnDeleteRow(row);
+                                } else {
+                                    alert('Không thể xóa tài khoản này.');
+                                }
+                            },
+                            error: function (xhr, ajaxOptions, thrownError) {
+                                alert(xhr.responseText);
                             }
                         });
+                    }
                 });
-            $('#pageSelect').change(function () {
-                $('#pageSize').val($(this).val());
-                $('#searchSupplier').submit();
-            });
+
         });
     </script>
 }

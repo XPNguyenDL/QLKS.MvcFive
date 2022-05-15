@@ -171,7 +171,7 @@ namespace QLKS.WebApp.Areas.Adm.Controllers
         }
 
 
-        // Post: adm/account/Edit/5
+        // get: adm/account/Edit/5
         public ActionResult Edit(string id)
 
         {
@@ -278,6 +278,26 @@ namespace QLKS.WebApp.Areas.Adm.Controllers
             accountTemp.Profile.LastName = accountUpdate.Profile.LastName;
             accountTemp.Profile.Picture = accountUpdate.Profile.Picture;
 
+        }
+
+        // POST:Adm/Account/delete/id
+        public JsonResult Delete(string id)
+        {
+            var success = true;
+            try
+            {
+                var accounts = db.IdentityUsers.Find(id);
+                db.UserProfiles.Remove(accounts.Profile);
+                db.Users.Remove(accounts);
+                db.SaveChanges();
+            }
+            catch (Exception)
+            {
+                success = false;
+            }
+            
+            
+            return Json(success);
         }
     }
 }
