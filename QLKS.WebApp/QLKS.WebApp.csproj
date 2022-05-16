@@ -203,6 +203,10 @@
     <Compile Include="Areas\Adm\Models\ProductCreateViewModel.cs" />
     <Compile Include="Areas\Adm\Models\ProductEditViewModel.cs" />
     <Compile Include="Areas\Adm\Models\ProductSearchModel.cs" />
+    <Compile Include="Areas\Manager\Controllers\AccountController.cs" />
+    <Compile Include="Areas\Manager\Controllers\ManagerController.cs" />
+    <Compile Include="Areas\Manager\Controllers\DashboardController.cs" />
+    <Compile Include="Areas\Manager\ManagerAreaRegistration.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\CommentController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -712,6 +716,17 @@
     <Content Include="Content\assets\vendor\remixicon\remixicon.ttf" />
     <Content Include="Content\assets\vendor\remixicon\remixicon.woff" />
     <Content Include="Content\assets\vendor\remixicon\remixicon.woff2" />
+    <Content Include="Areas\Adm\Views\Product\Index.cshtml" />
+    <Content Include="Areas\Manager\Views\web.config" />
+    <Content Include="Areas\Manager\Views\Shared\_Footer.cshtml" />
+    <Content Include="Areas\Manager\Views\Shared\_Layout.cshtml" />
+    <Content Include="Areas\Manager\Views\Shared\_NavBarHeader.cshtml" />
+    <Content Include="Areas\Manager\Views\Shared\_Navigation.cshtml" />
+    <Content Include="Areas\Manager\Views\Shared\_PageHeader.cshtml" />
+    <Content Include="Areas\Manager\Views\Shared\_PlainLayout.cshtml" />
+    <Content Include="Areas\Manager\Views\Shared\_ProfilePartial.cshtml" />
+    <Content Include="Areas\Manager\Views\Shared\_Toolbar.cshtml" />
+    <Content Include="Areas\Manager\Views\Dashboard\Index.cshtml" />
     <None Include="Scripts\jquery-3.6.0.intellisense.js" />
     <Content Include="Scripts\hotelJs\js\animated.headline.js" />
     <Content Include="Scripts\hotelJs\js\bootstrap.min.js" />
@@ -964,7 +979,7 @@
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Adm\Data\" />
     <Folder Include="Areas\Adm\Views\Admin\" />
-    <Folder Include="Areas\Adm\Views\Product\" />
+    <Folder Include="Areas\Manager\Data\" />
     <Folder Include="Uploads\Docs\" />
     <Folder Include="Uploads\Icons\" />
     <Folder Include="Uploads\Media\" />

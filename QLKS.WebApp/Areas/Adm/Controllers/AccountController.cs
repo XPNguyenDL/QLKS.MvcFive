@@ -40,7 +40,6 @@ namespace QLKS.WebApp.Areas.Adm.Controllers
         public ActionResult Index()
         {
             var accounts = db.IdentityUsers.ToList();
-
             return View(accounts);
         }
         private IAuthenticationManager AuthenticationManager

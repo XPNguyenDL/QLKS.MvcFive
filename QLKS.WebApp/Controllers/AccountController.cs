@@ -5,6 +5,7 @@ using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
+using QLKS.WebApp.DAL;
 using QLKS.WebApp.Models;
 
 namespace QLKS.WebApp.Controllers
@@ -84,14 +85,18 @@ namespace QLKS.WebApp.Controllers
                 case SignInStatus.Success:
                     var user = UserManager.FindByName(model.UserName);
                     var roles = UserManager.GetRoles(user.Id);
-                    if (roles.Count == 0 || (roles.Count == 1 && roles[0] == "Manager"))
+                    if (roles.Count == 0)
                     {
                         return RedirectToLocal(returnUrl);
                     }
+
+                    if (roles.Count == 1 && roles[0] == "Manager")
+                    {
+                        return RedirectToAction("Index", "Dashboard", new { area = "Manager" });
+                    }
                     else
                     {
-                            return RedirectToAction("Index", "Dashboard", new {area = "Adm"});
-
+                        return RedirectToAction("Index", "Dashboard", new {area = "Adm"});
                     }
 
                 case SignInStatus.LockedOut:
@@ -116,6 +121,7 @@ namespace QLKS.WebApp.Controllers
                 return View("Error");
             }
             return View(new VerifyCodeViewModel { Provider = provider, ReturnUrl = returnUrl, RememberMe = rememberMe });
+            
         }
 
         //

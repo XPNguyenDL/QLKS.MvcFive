@@ -130,6 +130,12 @@ namespace QLKS.WebApp.DAL
                 .WithOptional(c => c.Parent)
                 .HasForeignKey(c => c.ParentId)
                 .WillCascadeOnDelete(false);
+
+            //modelBuilder.Entity<Account>()
+            //    .HasMany(a => a.Suppliers)
+            //    .WithOptional(c => c.Create)
+            //    .HasForeignKey(c => c.AccountID)
+            //    .WillCascadeOnDelete();
             #endregion
 
         }

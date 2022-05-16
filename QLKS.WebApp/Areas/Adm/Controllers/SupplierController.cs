@@ -149,7 +149,22 @@ namespace QLKS.WebApp.Areas.Adm.Controllers
         }
 
         // Post: Adm/Supplier/Delete/guid
+        public JsonResult Delete(Guid id)
+        {
+            var success = true;
+            try
+            {
+                var supplier = db.Suppliers.Find(id);
+                db.Suppliers.Remove(supplier);
+                db.SaveChanges();
+            }
+            catch (Exception)
+            {
+                success = false;
+            }
+            
+            return Json(success);
+        }
 
-        
     }
 }

@@ -1,0 +1,48 @@
+﻿@using Microsoft.AspNet.Identity
+
+<div class="dropdown profile-element">
+
+    <!--Hình đại diện-->
+    <span>
+        <img class="img-circle img-shadow"
+             src="~/Images/hutao.png"
+             alt="Họ và tên"
+             style="width: 50px" />
+    </span>
+
+    <!--Họ tên và chức vụ-->
+    <a data-toggle="dropdown" class="dropdown-toggle"
+       href="@Url.Action("Profile", "Account")">
+        <span class="clear">
+            <span class="block m-t-xs">
+                <strong> @User.Identity.GetUserName()</strong>
+            </span>
+            <span class="text-muted text-xs block">
+	            Quản trị hệ thống
+                <b class="caret"></b>
+            </span>
+        </span>
+    </a>
+
+    <!-- Menu: xem profile, đổi mật khẩu đăng xuất,....-->
+    <ul class="dropdown-menu animated fadeInRight m-t-xs">
+        <li>
+            @Html.ActionLink("Xem Profile", "Profile", "Account")
+        </li>
+        <li>
+            @Html.ActionLink("Đổi mật khẩu", "ChangePwd", "Account")
+        </li>
+        <li>
+            @Html.ActionLink("Xem tin nhắn", "Inbox", "Message")
+        </li>
+        <li class="divider"></li>
+        <li>
+            <a href="javascript:document.getElementById('logoutForm').submit()">
+                Log Out Of The Earth
+            </a>
+        </li>
+    </ul>
+</div>
+<div class="logo-element">
+    CDS
+</div>

@@ -269,7 +269,10 @@ namespace QLKS.WebApp.Areas.Adm.Controllers
                 // Lấy đường dẫn tương đối của tập tin vùa upload
                 category.IconPath = Path.Combine("~/Uploads/Icons", uniqueFileName);
             }
+            
         }
+
+
 
 
         public ActionResult Create()
@@ -348,6 +351,24 @@ namespace QLKS.WebApp.Areas.Adm.Controllers
             }
             InitFormData(category);
             return View(category);
+        }
+
+        // Adm/Category/Delete/Guid
+        public JsonResult Delete(Guid id)
+        {
+            var success = true;
+            try
+            {
+                var category = db.Categories.Find(id);
+                db.Categories.Remove(category);
+                db.SaveChanges();
+            }
+            catch (Exception)
+            {
+                success = false;
+            }
+
+            return Json(success);
         }
     }
 }

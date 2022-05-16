@@ -26,7 +26,6 @@ namespace QLKS.WebApp.Models
         public virtual IList<Comment> Comments { get; set; }
         public virtual IList<ProductHistory> ProductHistories { get; set; }
 
-
         [NotMapped]
         public List<string> RoleTemps { get; set; }
     }

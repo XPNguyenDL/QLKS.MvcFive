@@ -12,6 +12,7 @@ namespace QLKS.WebApp.Areas.Adm.Controllers
         {
             ViewBag.numUsers = db.IdentityUsers.Count();
             ViewBag.numHotels = db.Suppliers.Count();
+            ViewBag.numSupplier = db.Suppliers.Count();
             return View();
         }
     }

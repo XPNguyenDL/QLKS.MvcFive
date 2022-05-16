@@ -4,11 +4,11 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
-namespace QLKS.WebApp.Areas.Adm.Controllers
+namespace QLKS.WebApp.Areas.Manager.Controllers
 {
     
-    [Authorize(Roles = "Admin,Salesman")]
-    public class AdminController : Controller
+    [Authorize(Roles = "Manager,Salesman")]
+    public class ManagerController : Controller
     {
         /// <summary>
         /// Phương thức chuyển hướng người dùng dựa vào

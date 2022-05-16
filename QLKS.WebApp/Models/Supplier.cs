@@ -39,6 +39,7 @@ namespace QLKS.WebApp.Models
 
         [StringLength(100), DataType(DataType.Url)]
         public string HomePage { get; set;}
+        
 
         public bool Actived { get; set;}
 
