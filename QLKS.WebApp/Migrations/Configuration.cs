@@ -23,7 +23,7 @@ namespace QLKS.WebApp.Migrations
             //  You can use the DbSet<T>.AddOrUpdate() helper extension method
             //  to avoid creating duplicate seed data.
             AccountSeeder.Seed(context);
-            SupplierSeeder.Seed(context);
+            //SupplierSeeder.Seed(context);
             CategorySeeder.Seed(context);
 
         }

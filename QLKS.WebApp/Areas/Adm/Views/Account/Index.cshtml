@@ -16,7 +16,7 @@
 
 <div class="row">
     <div class="ibox-title">
-        <h5>Danh sách nhà cung cấp</h5>
+        <h5>Danh sách tài khoản</h5>
         <div class="ibox-tools">
             @(Html.Bootstrap()
 				.ActionLink("Thêm tài khoản mới", "Create")
@@ -32,19 +32,19 @@
                 <thead>
                     <tr>
                         <th width="15%">
-                            @Html.DisplayNameFor(model => model.Profile.FullName)
+                            Họ tên
                         </th>
                         <th class="hidden-sm hidden-xs" width="20%">
-                            @Html.DisplayNameFor(model => model.Email)
+                            Email
                         </th>
                         <th class="hidden-sm hidden-xs">
-                            @Html.DisplayNameFor(model => model.PhoneNumber)
+                            Số điện thoại
                         </th>
                         <th>
-                            @Html.DisplayNameFor(model => model.UserName)
+                            Tài khoản
                         </th>
                         <th>
-                            @Html.DisplayNameFor(model => model.Profile.Picture)
+                            Hình nền
                         </th>
                         <th class="hidden-sm hidden-xs" style="width: 10%"></th>
                     </tr>
@@ -71,7 +71,7 @@
                             <td class="text-center">
                                 @if (!string.IsNullOrEmpty(item.Profile.Picture))
                                 {
-                                    <img src="@Url.Content(item.Profile.Picture)" alt="@item.Profile.Picture" class="img-circle" style="height: 50px; width: 50px" />
+                                    <img src="@Url.Content(item.Profile.Picture)" alt="@item.Profile.Picture" class="img-circle" style="height: 50px; width: 50px; object-fit: cover" />
                                 }
                             </td>
                             <td>

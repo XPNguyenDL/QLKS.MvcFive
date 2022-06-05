@@ -267,6 +267,10 @@
     <Compile Include="Migrations\202204281033103_UpdateSupplierAndUserProfile.designer.cs">
       <DependentUpon>202204281033103_UpdateSupplierAndUserProfile.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202205241616114_UpdateImage.cs" />
+    <Compile Include="Migrations\202205241616114_UpdateImage.designer.cs">
+      <DependentUpon>202205241616114_UpdateImage.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Account.cs" />
@@ -530,6 +534,7 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Images\6c757d.jpg" />
     <Content Include="Images\a1.jpg" />
     <Content Include="Images\a2.jpg" />
     <Content Include="Images\a3.jpg" />
@@ -544,14 +549,17 @@
     <Content Include="Images\customer\customar_bg.png" />
     <Content Include="Images\customer\cutomer.jpg" />
     <Content Include="Images\delete.png" />
+    <Content Include="Images\2014478.jpg" />
     <Content Include="Images\giuongdoi.jpg" />
     <Content Include="Images\hero\aboutpage_hero.jpg" />
     <Content Include="Images\hero\contact_hero.jpg" />
+    <Content Include="Images\hero\h2_hero.jpg" />
     <Content Include="Images\hero\footer_logo.png" />
     <Content Include="Images\hero\h1_hero.jpg" />
     <Content Include="Images\hero\roomspage_hero.jpg" />
     <Content Include="Images\hero\servicespage_hero.jpg" />
     <Content Include="Images\hutao.png" />
+    <Content Include="Images\2014508.gif" />
     <Content Include="Images\logo\date-picker-icon.png" />
     <Content Include="Images\logo\form-iocn.jpg" />
     <Content Include="Images\logo\logo.png" />
@@ -974,6 +982,7 @@
     <Content Include="Views\Shared\_FooterLayout.cshtml" />
     <Content Include="Views\HotelInfo\Index.cshtml" />
     <Content Include="Views\Comment\Index.cshtml" />
+    <Content Include="Views\HotelInfo\Blog.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -1038,6 +1047,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202204281033103_UpdateSupplierAndUserProfile.resx">
       <DependentUpon>202204281033103_UpdateSupplierAndUserProfile.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202205241616114_UpdateImage.resx">
+      <DependentUpon>202205241616114_UpdateImage.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

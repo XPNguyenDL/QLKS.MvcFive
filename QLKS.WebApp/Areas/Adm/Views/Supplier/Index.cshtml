@@ -61,6 +61,7 @@
                         <th width="20%" class="hidden-sm hidden-xs">Thông tin liên hệ</th>
                         <th width="30%" class="hidden-sm hidden-xs">Thông tin khác</th>
                         <th>Trạng thái</th>
+                        <th>Hình ảnh</th>
                         <th></th>
                     </tr>
                 </thead>
@@ -72,6 +73,8 @@
                                 <strong>@Html.DisplayFor(modelItem => item.Name)</strong>
                                 <br />
                                 <small>@Html.DisplayFor(modelItem => item.Description)</small>
+                                <br/>
+                                Tên gọi khác: @Html.DisplayFor(modelItem => item.Alias)
                             </td>
                             <td class="hidden-sm hidden-xs">
                                 Họ tên: @Html.DisplayFor(modelItem => item.ContactName)
@@ -79,22 +82,31 @@
                                 <small>Chức vụ: @Html.DisplayFor(modelItem => item.ContactTitle)</small>
                             </td>
 
-                            <td class="hidden-sm hidden-xs">
-                                Địa chỉ: @Html.DisplayFor(modelItem => item.Address) <br />
-                                UserName: @Html.DisplayFor(modelItem => item.Email) <br />
-                                Điện thoại: @Html.DisplayFor(modelItem => item.Phone) <br />
-                                Website: @Html.DisplayFor(modelItem => item.HomePage) <br />
-                            </td>
+	                        <td class="hidden-sm hidden-xs">
+		                        Địa chỉ: @Html.DisplayFor(modelItem => item.Address) <br />
+		                        Email: @Html.DisplayFor(modelItem => item.Email) <br />
+		                        Điện thoại: @Html.DisplayFor(modelItem => item.Phone) <br />
+		                        Website: @Html.DisplayFor(modelItem => item.HomePage) <br />
+	                        </td>
+                            
+	                        
 
-                            <td class="td_toggle">
+	                        <td class="td_toggle">
                                 <button type="button" class="toggle @(item.Actived.ToString().ToLower())"
                                         data-toggle-sate="true"
                                         data-url="@Url.Action("UpdateToggle")"
                                         data-srgs="Actived_@(item.Actived.ToString().ToLower())_@(item.SupplierId)">
                                 </button>
                             </td>
+                            
+	                        <td class="text-center">
+		                        @if (!string.IsNullOrEmpty(item.Image))
+		                        {
+			                        <img src="@Url.Content(item.Image)" alt="@item.Image" style="max-width: 55px" />
+		                        }
+	                        </td>
 
-                            <td>
+	                        <td>
                                 @(Html.Bootstrap()
 								.ActionLink("", "Edit")
 								.RouteValues(new {id = item.SupplierId})
@@ -197,5 +209,3 @@
         })
     </script>
 }
-
-

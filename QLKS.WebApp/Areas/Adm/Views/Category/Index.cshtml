@@ -32,30 +32,27 @@
                 <thead>
 
                     <tr>
-                        <th>
-                            @Html.DisplayNameFor(model => model.ParentId)
-                        </th>
-                        <th>
-                            @Html.DisplayNameFor(model => model.Name)
-                        </th>
-                        <th>
-                            @Html.DisplayNameFor(model => model.Alias)
-                        </th>
-                        <th>
-                            @Html.DisplayNameFor(model => model.Size)
-                        </th>
-                        <th class="d-block d-sm-none">
-                            @Html.DisplayNameFor(model => model.Description)
-                        </th>
-                        <th>
-                            @Html.DisplayNameFor(model => model.IconPath)
-                        </th>
-                        <th>
-                            @Html.DisplayNameFor(model => model.Actived)
-                        </th>
-                        <th>
-                            @Html.DisplayNameFor(model => model.OrderNo)
-                        </th>
+	                    <th>
+		                    Mã loại cha
+	                    </th>
+	                    <th>
+		                    Tên loại khách sạn
+	                    </th>
+	                    <th>
+		                    Tên gọi khác
+	                    </th>
+	                    <th>
+		                    Kích thước phòng
+	                    </th>
+	                    <th class="d-block d-sm-none">
+		                    Mô tả sơ lược
+	                    </th>
+	                    <th>
+		                    Hình ảnh
+	                    </th>
+	                    <th>
+		                    Trạng thái
+	                    </th>
                         <th></th>
                     </tr>
                 </thead>
@@ -91,9 +88,6 @@
                                         data-url="@Url.Action("UpdateToggle")"
                                         data-args="Actived_@(item.Actived.ToString().ToLower())_@(item.CategoryId)">
                                 </button>
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.OrderNo)
                             </td>
                             <td>
                                 @(Html.Bootstrap()

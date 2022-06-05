@@ -8027,4 +8027,13 @@ h6 {
   margin-bottom: 10px;
 }
 
+.img-h-16 {
+    object-fit: cover;
+    height: 160px;
+}
+
+.box-250 {
+    max-width: 280px;
+}
+
 /*# sourceMappingURL=main.css.map */
