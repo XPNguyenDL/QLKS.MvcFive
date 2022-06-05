@@ -1,7 +1,109 @@
-﻿
+﻿@model PagedList.IPagedList<Supplier>
+
 @{
     ViewBag.Title = "Index";
 }
 
-<h2>@ViewBag.Name</h2>
+<link href="~/Content/PagedList.css" rel="stylesheet" />
+<link href="~/Content/AdmGrid.css" rel="stylesheet" />
+
+
+<div class="container px-4 px-lg-5 my-5">
+    <div class="text-center text-white">
+        <div class="row">
+            <div class="col-md-12 m-b-sm">
+                @using (Html.BeginForm("Index", "HotelInfo", FormMethod.Get,
+                    new { @class = "form-horizontal", role = "search", id = "searchSupplier" }))
+                {
+                    <div class="input-group mr-10" style="max-width: 60%; margin: 0 auto; align-items: center;">
+                        @(Html.TextBox("Keyword", null, new
+                    {
+                        placeholder = "Nhập tên công ty hoặc thông tin liên lạc khác",
+                        @class = "input-sm form-control mr-10"
+                    }))
+
+                        @Html.Hidden("PageSize", null, new { id = "pageSize" })
+
+                        <span class="input-group-btn d-none d-sm-none d-md-block">
+                            <button type="submit" class="btn btn-sm btn-primary" style="padding: 20px 15px;">Tìm kiếm</button>
+                            @(Html.ActionLink("Bỏ lọc", "Index", null, new {@class = "btn btn-sm btn-warning", style ="padding: 20px 15px;"}))
+                        </span>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<section class="py-5">
+    <div class="container px-4 px-lg-5 mt-5">
+        <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+            @foreach (var item in Model)
+            {
+                <div class="col mb-5 box-250">
+                    <div class="card h-100">
+                        
+                        @if (item.Actived)
+                        {
+							<div class="badge bg-light success position-absolute" style="top: 0.5rem; right: 0.5rem">Còn phòng</div>
+                        }
+                        else
+                        {
+							<div class="badge bg-light text-danger position-absolute" style="top: 0.5rem; right: 0.5rem">Hết phòng</div>
+                        }
+
+                        
+                        <span>
+                            @if (!string.IsNullOrEmpty(item.Image))
+                            {
+                                <img class="card-img-top img-h-16" src="@Url.Content(item.Image)" alt="@item.Image" />
+                            }
+                            else
+                            {
+                                <img class="card-img-top img-h-16" src="~/Images/6c757d.jpg" alt="@item.Image" />
+                            }
+                        </span>
+                        <div class="card-body p-4">
+                            <div class="text-center">
+                                <!-- Product name-->
+                                <h5 class="fw-bolder">@item.Name</h5>
+                                <!-- Product price-->
+                            </div>
+                        </div>
+
+                        <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                            <div class="text-center">
+                                @(Html.Bootstrap()
+                                            .ActionLink("Xem chi tiết", "Blog")
+                                            .RouteValues(new {alias = item.Alias})
+                                    .Title("Xem blog")
+	                                .Class("btn btn-outline-dark mt-aut"))
+                                
+                                @*<a class="btn btn-outline-dark mt-auto" href="https://startbootstrap.github.io/startbootstrap-shop-homepage/#">View options</a>*@
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</section>
+
+<div class="row">
+    <div class="col-md-12 text-center">
+        @Html.PagedListPager(
+            Model,
+            page => Url.Action(
+                "Index",
+                new
+                {
+                    page,
+                    pageSize = ViewBag.CurrentPageSize,
+                    keyword = ViewBag.Keywowrd
+                }),
+            PagedListRenderOptions.ClassicPlusFirstAndLast)
+    </div>
+</div>
+
 

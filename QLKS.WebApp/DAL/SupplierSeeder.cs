@@ -23,7 +23,7 @@ namespace QLKS.WebApp.DAL
                     Address = "B24-D7 Khu Đô Thị Mới, P. Dịch Vọng, Q. Cầu Giấy,Hà Nội",
                     Email = "info@newlotushotel.com.vn",
                     HomePage = "www.facebook.com/newlotushotel.hanoi",
-                    Phone = "0243-792-5359",
+                    Phone = "02437925359",
                     Actived = true,
                     Alias = "New-Lotus-Hotel"
                 });

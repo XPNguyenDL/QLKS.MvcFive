@@ -23,17 +23,17 @@ namespace QLKS.WebApp
             //    },
             //    namespaces: new[] { "QLKS.WebApp.Controllers" }
             //);
-            routes.MapRoute(
-                name: "ApiHotelInfoApi",
-                url: "khach-san-{hotelName}/{controller}/{action}",
-                defaults: new
-                {
-                    controller = "HotelInfo",
-                    action = "Index",
-                    id = UrlParameter.Optional
-                },
-                namespaces: new[] { "QLKS.WebApp.Controllers" }
-            );
+            //routes.MapRoute(
+            //    name: "ApiHotelInfoApi",
+            //    url: "khach-san-{id}/{controller}/{action}",
+            //    defaults: new
+            //    {
+            //        controller = "HotelInfo",
+            //        action = "Blog",
+            //        id = UrlParameter.Optional
+            //    },
+            //    namespaces: new[] { "QLKS.WebApp.Controllers" }
+            //);
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",

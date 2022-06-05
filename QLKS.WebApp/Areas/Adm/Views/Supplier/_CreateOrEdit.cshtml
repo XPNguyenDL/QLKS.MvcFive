@@ -5,17 +5,17 @@
 }
 
 <div class="form-group">
-	@Html.LabelFor(model => model.Name, new { @class = "control-label col-sm-2" })
-	<div class="col-md-10">
-		@(Html.EditorFor(model => model.Name,
-			new { htmlAttributes = new { @class = "form-control"} }))
-		@(Html.ValidationMessageFor(model => model.Name, "",
-			new { @class = "text-danger"}))
-	</div>
+    <label class="control-label col-sm-2" for="Name">Tên khách sạn</label>
+    <div class="col-md-10">
+        @(Html.EditorFor(model => model.Name,
+			new {htmlAttributes = new {@class = "form-control"}}))
+        @(Html.ValidationMessageFor(model => model.Name, "",
+			new {@class = "text-danger"}))
+    </div>
 </div>
 
 <div class="form-group">
-	@Html.LabelFor(model => model.Alias, new { @class = "control-label col-sm-2" })
+    <label class="control-label col-sm-2" for="Alias">Tên gọi khác</label>
 	<div class="col-md-10">
 		@(Html.EditorFor(model => model.Alias,
 			new { htmlAttributes = new { @class = "form-control"} }))
@@ -25,7 +25,13 @@
 </div>
 
 <div class="form-group">
-    @Html.LabelFor(model => model.Description, new { @class = "control-label col-sm-2" })
+    @*@Html.LabelFor(model => model.Description, new
+{
+    @class = "control-label col-md-2",
+    id = "Description"
+
+})*@
+    <label id = "Description" class="control-label col-sm-2" for="Description">Mô tả chi tiết</label>
     <div class="col-md-10">
         @Html.EditorFor(model => model.Description, new
         {
@@ -43,7 +49,7 @@
 <div class="hr-line-dashed"></div>
 
 <div class="form-group">
-	@Html.LabelFor(model => model.ContactName, new { @class = "control-label col-md-2" })
+	<label class="control-label col-sm-2" for="ContactName">Tên người dại diện</label>
 	<div class="col-md-10">
 		@(Html.EditorFor(model => model.ContactName,
 			new { htmlAttributes = new { @class = "form-control"} }))
@@ -53,7 +59,7 @@
 </div>
 
 <div class="form-group">
-	@Html.LabelFor(model => model.ContactTitle, new { @class = "control-label col-md-2" })
+    <label class="control-label col-sm-2" for="ContactTitle">Chức vụ</label>
 	<div class="col-md-10">
 		@(Html.EditorFor(model => model.ContactTitle,
 			new { htmlAttributes = new { @class = "form-control"} }))
@@ -65,13 +71,13 @@
 <div class="hr-line-dashed"></div>
 
 <div class="form-group">
-    @Html.LabelFor(model => model.Address, new { @class = "control-label col-md-2" })
-    <div class="col-md-10">
-        @(Html.EditorFor(model => model.Address,
-			new { htmlAttributes = new { @class = "form-control"} }))
-        @(Html.ValidationMessageFor(model => model.Address, "",
-			new { @class = "text-danger"}))
-    </div>
+	<label class="control-label col-sm-2" for="Address">Địa chỉ</label>
+	<div class="col-md-10">
+		@(Html.EditorFor(model => model.Address,
+			new {htmlAttributes = new {@class = "form-control"}}))
+		@(Html.ValidationMessageFor(model => model.Address, "",
+			new {@class = "text-danger"}))
+	</div>
 </div>
 
 <div class="form-group">
@@ -85,17 +91,17 @@
 </div>
 
 <div class="form-group">
-    @Html.LabelFor(model => model.Phone, new { @class = "control-label col-md-2" })
+    @Html.Label("Số điện thoại", new { @class = "control-label col-md-2" })
     <div class="col-md-10">
         @(Html.EditorFor(model => model.Phone,
-			new { htmlAttributes = new { @class = "form-control"} }))
+			new {htmlAttributes = new {@class = "form-control"}}))
         @(Html.ValidationMessageFor(model => model.Phone, "",
-			new { @class = "text-danger"}))
+			new {@class = "text-danger"}))
     </div>
 </div>
 
 <div class="form-group">
-    @Html.LabelFor(model => model.HomePage, new { @class = "control-label col-md-2" })
+	@Html.Label("Trang web", new { @class = "control-label col-md-2" })
     <div class="col-md-10">
         @(Html.EditorFor(model => model.HomePage,
 			new { htmlAttributes = new { @class = "form-control"} }))
@@ -116,3 +122,38 @@
 </div>
 
 <div class="hr-line-dashed"></div>
+
+<div class="form-group">
+	@Html.Label("Upload", htmlAttributes: new { @class = "control-label col-md-2" })
+	<div class="col-md-10">
+		@*@if (!string.IsNullOrEmpty(Model.Image))
+		{
+			<text>Hình hiện tại: </text>
+			<img src="@Url.Content(Model.Image)" alt="@Model.Image" class="img-responsive" style="max-width: 55px;"/>
+		}
+		else
+		{
+			<text>Chưa có hình đại diện. Chọn tập tin dể update</text>
+		}
+		<br />*@
+		@Html.HiddenFor(model => model.Image)
+		@(Html.TextBox("Upload", null, new
+		{
+			@class = "form-control",
+			type = "file"
+
+		}))
+		@(Html.ValidationMessageFor(model => model.Image, "", new { @class = "text-danger"}))
+	</div>
+</div>
+
+<div class="hr-line-dashed"></div>
+<div class="form-group">
+    @Html.Label("Bản đồ", htmlAttributes: new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+        <div class="checkbox" style="margin-left: 4px;">
+            @Html.EditorFor(model => model.ShortInfo)
+            @(Html.ValidationMessageFor(model => model.ShortInfo, "", new { @class = "text-danger"}))
+        </div>
+    </div>
+</div>

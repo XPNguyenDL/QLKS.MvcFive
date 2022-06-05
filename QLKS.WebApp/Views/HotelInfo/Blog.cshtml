@@ -1,0 +1,134 @@
+﻿@model Supplier
+@{
+    ViewBag.Title = "Blog";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<main>
+
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-lg-8">
+                <!-- Post content-->
+                <article>
+	                <!-- Post header-->
+	                <header class="mb-4">
+		                <!-- Post title-->
+		                <h1 class="fw-bolder mb-1">@Model.Name</h1>
+                        
+		                <!-- Post meta content-->
+		                <div class="text-muted fst-italic mb-2">@DateTime.Now</div>
+	                </header>
+	                <!-- Preview image figure-->
+	                <figure class="mb-4">
+		                @if (!string.IsNullOrEmpty(Model.Image))
+		                {
+			                <img class="img-fluid rounded" src="@Url.Content(Model.Image)" alt="...">
+		                }
+		                else
+		                {
+			                <img class="img-fluid rounded" src="https://dummyimage.com/900x400/ced4da/6c757d.jpg" alt="...">
+
+		                }
+	                </figure>
+	                <!-- Post content-->
+	                <section class="mb-5">
+		                @*<p class="fs-5 mb-4">Science is an enterprise that should be cherished as an activity of the free human mind. Because it transforms who we are, how we live, and it gives us an understanding of our place in the universe.</p>
+                        <p class="fs-5 mb-4">The universe is large and old, and the ingredients for life as we know it are everywhere, so there's no reason to think that Earth would be unique in that regard. Whether of not the life became intelligent is a different question, and we'll see if we find that.</p>
+                        <p class="fs-5 mb-4">If you get asteroids about a kilometer in size, those are large enough and carry enough energy into our system to disrupt transportation, communication, the food chains, and that can be a really bad day on Earth.</p>
+                        <p class="fs-5 mb-4">For me, the most fascinating interface is Twitter. I have odd cosmic thoughts every day and I realized I could hold them to myself or share them with people who might be interested.</p>*@
+		                <h2 class="fw-bolder mb-4 mt-5">Thông tin chi tiết</h2>
+		                <p class="fs-5 mb-4">@Model.Description</p>
+	                </section>
+                </article>
+                @if (!string.IsNullOrEmpty(Model.ShortInfo))
+                {
+	                <section class="mb-5">
+		                <div class="card bg-light align-center">
+			                <div class="card-body" style="margin: 0 auto;">
+                            
+				                <iframe src="@Model.ShortInfo" width="600" height="450" style="border: 0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+			                </div>
+		                </div>
+	                </section>
+                }
+                <!-- Comments section-->
+                <section class="mb-5">
+                    <div class="card bg-light">
+                        <div class="card-body">
+                            <!-- Comment form-->
+                            <form class="mb-4"><textarea class="form-control" rows="3" placeholder="Nhận xét...."></textarea></form>
+                            <!-- Comment with nested comments-->
+                            <div class="d-flex mb-4">
+                                <!-- Parent comment-->
+                                <div class="flex-shrink-0 mr-4"><img class="rounded-circle" src="https://dummyimage.com/50x50/ced4da/6c757d.jpg" alt="..."></div>
+                                <div class="ms-3">
+                                    <div class="fw-bold">Commenter Name</div>
+                                    If you're going to lead a space frontier, it has to be government; it'll never be private enterprise. Because the space frontier is dangerous, and it's expensive, and it has unquantified risks.
+                                    <!-- Child comment 1-->
+                                    <div class="d-flex mt-4">
+                                        <div class="flex-shrink-0 mr-4"><img class="rounded-circle" src="https://dummyimage.com/50x50/ced4da/6c757d.jpg" alt="..."></div>
+                                        <div class="ms-3">
+                                            <div class="fw-bold">Commenter Name</div>
+                                            And under those conditions, you cannot establish a capital-market evaluation of that enterprise. You can't get investors.
+                                        </div>
+                                    </div>
+                                   
+                                </div>
+                            </div>
+                            <!-- Single comment-->
+                            <div class="d-flex">
+                                <div class="flex-shrink-0 mr-4"><img class="rounded-circle" src="https://dummyimage.com/50x50/ced4da/6c757d.jpg" alt="..."></div>
+                                <div class="ms-3">
+                                    <div class="fw-bold">Commenter Name</div>
+                                    When I look at the universe and all the ways the universe wants to kill us, I find it hard to reconcile that with statements of beneficence.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+            </div>
+            <!-- Side widgets-->
+            <div class="col-lg-4">
+                <!-- Search widget-->
+                <div class="card mb-4">
+                    <div class="card-header"><strong>Tìm kiếm</strong></div>
+                    <div class="card-body">
+                        <div class="input-group" style="align-items: center;">
+                            <input class="form-control mr-10" type="text" placeholder="Nhập từ khóa để tìm kiếm...." aria-label="Nhập từ khóa để tìm kiếm...." aria-describedby="button-search">
+                            <button class="btn btn-primary" id="button-search" type="button">Tìm</button>
+                        </div>
+                    </div>
+                </div>
+                <!-- Categories widget-->
+                <div class="card mb-4">
+                    <div class="card-header"><strong>Thông tin liên hệ</strong></div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <ul class="list-unstyled mb-0">
+	                                <li>
+		                                Người đại diện: @Model.ContactName
+	                                </li>
+	                                <li>
+		                                Chức vụ: <span class="primary">@Model.ContactTitle</span>
+	                                </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Side widget-->
+                <div class="card mb-4">
+                    <div class="card-header"><strong>Thông tin khác</strong></div>
+	                <div class="card-body">
+		                Địa chỉ: @Model.Address <br />
+		                Email: @Model.Email <br />
+		                Điện thoại: @Model.Phone <br />
+	                </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>

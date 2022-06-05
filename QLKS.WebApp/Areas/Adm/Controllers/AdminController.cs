@@ -7,7 +7,7 @@ using System.Web.Mvc;
 namespace QLKS.WebApp.Areas.Adm.Controllers
 {
     
-    [Authorize(Roles = "Admin,Manager,Salesman")]
+    [Authorize(Roles = "Admin,Salesman")]
     public class AdminController : Controller
     {
         /// <summary>

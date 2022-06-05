@@ -54,7 +54,7 @@ namespace QLKS.WebApp.DAL
             };
             // Gán quyền Admin và Manager cho người dùng vừa tạo
             var result = userManager.Create(adminUser, password);
-            // userManager.Update()
+            // userManager.Create()
             if (result.Succeeded)
             {
                 userManager.AddToRole(adminUser.Id, adminRole);

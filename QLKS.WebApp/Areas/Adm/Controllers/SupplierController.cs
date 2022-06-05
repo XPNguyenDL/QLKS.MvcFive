@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Web;
@@ -60,6 +61,65 @@ namespace QLKS.WebApp.Areas.Adm.Controllers
             }
         }
 
+        private void ValiUploadImage(HttpPostedFileBase upload)
+        {
+            var allowImageFileTypes = new[] { ".jpg", ".jpeg", ".gif", ".png" };
+
+            // Kiểm tra tính hợp lệ của tập tin được upload
+            if (upload != null)
+            {
+                // Kiểm tra trường hợp file rỗng
+                if (upload.ContentLength == 0)
+                {
+                    ModelState.AddModelError("IconPath", "Tập tin không có nội dung");
+                }
+
+                // Kiểm tra trường hợp file quá lớn
+                if (upload.ContentLength > 1 * 1024 * 1024)
+                {
+                    ModelState.AddModelError("IconPath", "Dung lượng file quá lớn (>1MB)");
+                }
+
+                // Lấy phần mở rộng của tên file
+                var imageExt = Path.GetExtension(upload.FileName);
+
+                // Kiểm tra trường hợp upload các file không đúng định dạng cho phép
+                if (!allowImageFileTypes.Contains(imageExt))
+                {
+                    ModelState.AddModelError("IconPath",
+                        "Chỉ được phép upload tập tin jpg, jpeg, gif và png");
+                }
+            }
+        }
+
+        private void SaveUpLoadFile(HttpPostedFileBase upload, Supplier supplier)
+        {
+            if (upload != null && upload.ContentLength > 0)
+            {
+                // Xóa Icon cũ nếu có
+                if (!string.IsNullOrEmpty(supplier.Image))
+                {
+                    var oldFilePath = Server.MapPath(supplier.Image);
+                    System.IO.File.Delete(oldFilePath);
+                }
+
+                // Lấy đường dẫn tuyệt đối của thư mục lưu file
+                var tagerFolder = Server.MapPath("~/Uploads/Icons");
+
+                // Tạo thêm mới cho tập tin và đường dẫn tuyệt đối để lưu
+                var uniqueFileName = DateTime.Now.Ticks + "_" + upload.FileName;
+                var targetFilePath = Path.Combine(tagerFolder, uniqueFileName);
+
+                // Lưu File
+                upload.SaveAs(targetFilePath);
+
+                // Lấy đường dẫn tương đối của tập tin vùa upload
+                supplier.Image = Path.Combine("~/Uploads/Icons", uniqueFileName);
+            }
+
+        }
+
+
         // GET: Adm/Supplier/Create
         public ActionResult Create()
         {
@@ -69,16 +129,17 @@ namespace QLKS.WebApp.Areas.Adm.Controllers
         //Post: Adm/Supplier/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(FormCollection data)
+        public ActionResult Create(FormCollection data, HttpPostedFileBase upload)
         {
             var supplier = new Supplier();
             try
             {
+                ValiUploadImage(upload);
                 UpdateModel(supplier, new[]
                 {
                     "Name", "Alias", "Description", "ContactName",
                     "Address", "UserName", "Phone", "HomePage",
-                    "Actived", "ContactTitle"
+                    "Actived", "ContactTitle", "Image", "ShortInfo"
                 });
                 if (db.Suppliers.SingleOrDefault(x => x.Alias == supplier.Alias && x.SupplierId != supplier.SupplierId) != null)
                 {
@@ -87,6 +148,7 @@ namespace QLKS.WebApp.Areas.Adm.Controllers
                 if (ModelState.IsValid)
                 {
                     supplier.SupplierId = Guid.NewGuid();
+                    SaveUpLoadFile(upload, supplier);
                     db.Suppliers.Add(supplier);
                     db.SaveChanges();
                     return Redirect(supplier.SupplierId);
@@ -117,17 +179,17 @@ namespace QLKS.WebApp.Areas.Adm.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(FormCollection data)
+        public ActionResult Edit(FormCollection data, HttpPostedFileBase upload)
         {
             var supplier = new Supplier();
             try
             {
-
+                ValiUploadImage(upload);
                 UpdateModel(supplier, new[]
                 {
                     "SupplierId", "Alias", "Name", "Description", "ContactName",
                     "Address", "UserName", "Phone", "HomePage",
-                    "Actived", "ContactTitle", "RowVersion"
+                    "Actived", "ContactTitle", "RowVersion", "Image", "ShortInfo"
                 });
                 if (db.Suppliers.SingleOrDefault(x => x.Alias == supplier.Alias && x.SupplierId != supplier.SupplierId) != null)
                 {
@@ -135,6 +197,7 @@ namespace QLKS.WebApp.Areas.Adm.Controllers
                 }
                 if (ModelState.IsValid)
                 {
+                    SaveUpLoadFile(upload, supplier);
                     db.Entry(supplier).State = EntityState.Modified;
                     db.SaveChanges();
                     return Redirect(supplier.SupplierId);
@@ -149,7 +212,22 @@ namespace QLKS.WebApp.Areas.Adm.Controllers
         }
 
         // Post: Adm/Supplier/Delete/guid
+        public JsonResult Delete(Guid id)
+        {
+            var success = true;
+            try
+            {
+                var supplier = db.Suppliers.Find(id);
+                db.Suppliers.Remove(supplier);
+                db.SaveChanges();
+            }
+            catch (Exception)
+            {
+                success = false;
+            }
+            
+            return Json(success);
+        }
 
-        
     }
 }

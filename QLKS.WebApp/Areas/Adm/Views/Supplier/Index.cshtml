@@ -5,162 +5,207 @@
 
 @section pluginStyles
 {
-    <link href="~/Content/PagedList.css" rel="stylesheet"/>
-    <link href="~/Content/AdmGrid.css" rel="stylesheet"/>
-
+    <link href="~/Content/PagedList.css" rel="stylesheet" />
+    <link href="~/Content/AdmGrid.css" rel="stylesheet" />
+    <link href="~/Content/plugins/dataTables/dataTables.bootstrap.css" rel="stylesheet" />
+    <link href="~/Content/plugins/dataTables/dataTables.responsive.css" rel="stylesheet" />
+    <link href="~/Content/plugins/dataTables/dataTables.tableTools.min.css" rel="stylesheet" />
 }
 
 <div class="row">
-	<div class="ibox float-e-margins">
-		<div class="ibox-title">
-			<h5>Danh sách nhà cung cấp</h5>
-			<div class="ibox-tools">
-				@(Html.Bootstrap()
+    <div class="ibox float-e-margins">
+        <div class="ibox-title">
+            <h5>Danh sách nhà cung cấp</h5>
+            <div class="ibox-tools">
+                @(Html.Bootstrap()
 					.ActionLink("Thêm công ty mới", "Create")
 					.Class("btn btn-primary btn-xs")
 					.PrependIcon("fa fa-plus"))
-			</div>
-		</div>
+            </div>
+        </div>
 
-		<div class="ibox-content p-sm">
-			<!-- Phẩn hiển thị form tìm kiếm -->
-			<div class="row">
-				<div class="col-md-6 m-b-sm">
-					@using (Html.BeginForm("Index", "Supplier", FormMethod.Get,
-						new { @class = "form-horizontal", role = "search", id = "searchSupplier" }))
-					{
-						<div class="input-group">
-							@(Html.TextBox("Keyword", null, new
+        <div class="ibox-content p-sm">
+            <!-- Phẩn hiển thị form tìm kiếm -->
+            <div class="row">
+                <div class="col-md-6 m-b-sm">
+                    @using (Html.BeginForm("Index", "Supplier", FormMethod.Get,
+                        new { @class = "form-horizontal", role = "search", id = "searchSupplier" }))
+                    {
+                        <div class="input-group">
+                            @(Html.TextBox("Keyword", null, new
 							{
 								placeholder = "Nhập tên công ty hoặc thông tin liên lạc khác",
 								@class = "input-sm form-control"
 							}))
 
-							@Html.Hidden("PageSize", null, new { id = "pageSize" })
+                            @Html.Hidden("PageSize", null, new { id = "pageSize" })
 
-							<span class="input-group-btn">
-								<button type="submit" class="btn btn-sm btn-primary">Tìm kiếm</button>
-								@(Html.ActionLink("Bỏ lọc", "Index", null, new {@class = "btn btn-sm btn-warning"}))
-							</span>
-						</div>
-					}
-				</div>
-				<div class="col-md-6 m-b-sm">
+                            <span class="input-group-btn">
+                                <button type="submit" class="btn btn-sm btn-primary">Tìm kiếm</button>
+                                @(Html.ActionLink("Bỏ lọc", "Index", null, new {@class = "btn btn-sm btn-warning"}))
+                            </span>
+                        </div>
+                    }
+                </div>
+                <div class="col-md-6 m-b-sm">
 
-				</div>
-			</div>
+                </div>
+            </div>
 
-			<!-- Phẩn hiển thị danh sách nhà cung cấp -->
-			<table id="tblsuppliers" class="table table-responsive table-bordered table-hover">
-				<tr>
-					<th>Tên công ty</th>
+            <!-- Phẩn hiển thị danh sách nhà cung cấp -->
+            <table id="tblsuppliers" class="table table-responsive table-bordered table-hover">
+                <thead>
+                    <tr>
+                        <th>Tên công ty</th>
 
-					<th width="20%" class="hidden-sm hidden-xs">Thông tin liên hệ</th>
-					<th width="30%" class="hidden-sm hidden-xs">Thông tin khác</th>
-					<th>Trạng thái</th>
-					<th></th>
-				</tr>
-				@foreach (var item in Model)
-				{
-					<tr>
-						<td>
-							<strong>@Html.DisplayFor(modelItem => item.Name)</strong>
-							<br />
-							<small>@Html.DisplayFor(modelItem => item.Description)</small>
-						</td>
-						<td class="hidden-sm hidden-xs">
-							Họ tên: @Html.DisplayFor(modelItem => item.ContactName)
-							<br />
-							<small>Chức vụ: @Html.DisplayFor(modelItem => item.ContactTitle)</small>
-						</td>
+                        <th width="20%" class="hidden-sm hidden-xs">Thông tin liên hệ</th>
+                        <th width="30%" class="hidden-sm hidden-xs">Thông tin khác</th>
+                        <th>Trạng thái</th>
+                        <th>Hình ảnh</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                <strong>@Html.DisplayFor(modelItem => item.Name)</strong>
+                                <br />
+                                <small>@Html.DisplayFor(modelItem => item.Description)</small>
+                                <br/>
+                                Tên gọi khác: @Html.DisplayFor(modelItem => item.Alias)
+                            </td>
+                            <td class="hidden-sm hidden-xs">
+                                Họ tên: @Html.DisplayFor(modelItem => item.ContactName)
+                                <br />
+                                <small>Chức vụ: @Html.DisplayFor(modelItem => item.ContactTitle)</small>
+                            </td>
 
-						<td class="hidden-sm hidden-xs">
-							Địa chỉ: @Html.DisplayFor(modelItem => item.Address) <br />
-							UserName: @Html.DisplayFor(modelItem => item.Email) <br />
-							Điện thoại: @Html.DisplayFor(modelItem => item.Phone) <br />
-							Website: @Html.DisplayFor(modelItem => item.HomePage) <br />
-						</td>
+	                        <td class="hidden-sm hidden-xs">
+		                        Địa chỉ: @Html.DisplayFor(modelItem => item.Address) <br />
+		                        Email: @Html.DisplayFor(modelItem => item.Email) <br />
+		                        Điện thoại: @Html.DisplayFor(modelItem => item.Phone) <br />
+		                        Website: @Html.DisplayFor(modelItem => item.HomePage) <br />
+	                        </td>
+                            
+	                        
 
-						<td class="td_toggle">
-							<button type="button" class="toggle @(item.Actived.ToString().ToLower())"
-							        data-toggle-sate="true"
-							        data-url="@Url.Action("UpdateToggle")"
-							        data-srgs="Actived_@(item.Actived.ToString().ToLower())_@(item.SupplierId)">
-							</button>
-						</td>
+	                        <td class="td_toggle">
+                                <button type="button" class="toggle @(item.Actived.ToString().ToLower())"
+                                        data-toggle-sate="true"
+                                        data-url="@Url.Action("UpdateToggle")"
+                                        data-srgs="Actived_@(item.Actived.ToString().ToLower())_@(item.SupplierId)">
+                                </button>
+                            </td>
+                            
+	                        <td class="text-center">
+		                        @if (!string.IsNullOrEmpty(item.Image))
+		                        {
+			                        <img src="@Url.Content(item.Image)" alt="@item.Image" style="max-width: 55px" />
+		                        }
+	                        </td>
 
-                        <td>
-                            @(Html.Bootstrap()
+	                        <td>
+                                @(Html.Bootstrap()
 								.ActionLink("", "Edit")
 								.RouteValues(new {id = item.SupplierId})
 								.Title("Cập nhật")
 								.AppendIcon("fa fa-pencil fa-2x"))
-							
-
-                            @(Html.Bootstrap()
-								.ActionLink("", "GetBySupplierId", "Product")
-								.Class("ajax-link")
+                                @(Html.Bootstrap()
+								.ActionLink("", "Delete")
+								.Class("dz-remove")
 								.RouteValues(new {id = item.SupplierId})
-								.AppendIcon("fa fa-gift fa-2x")
-	                            .Title("Xem danh sách sản phẩm"))
-                        </td>
-					</tr>
-				}
-			</table>
+								.AppendIcon("fa-solid fa-trash-can fa-2x")
+								.Title("Xóa"))
+                            </td>
+                        </tr>
+                    }
 
-			<!-- Phẩn hiển thị thanh phân trang -->
-			<div class="row">
-				<div class="col-sm-6 m-b-sm text-center">
-					Hiển thị
-					@(Html.DropDownList("PageSize", null, 
+                </tbody>
+            </table>
+
+            <!-- Phẩn hiển thị thanh phân trang -->
+            <div class="row">
+                <div class="col-sm-6 m-b-sm text-center">
+                    Hiển thị
+                    @(Html.DropDownList("PageSize", null,
 						new {@class = "input-sm", id = "pageSelect"}))
-					mẫu tin
-				</div>
-				<div class="col-md-6 text-center">
-					@Html.PagedListPager(
-						Model, 
-						page => Url.Action(
-							"Index",
-							new
-							{
-								page,
-								pageSize = ViewBag.CurrentPageSize,
-								keyword = ViewBag.Keywowrd
-							}),
-						PagedListRenderOptions.ClassicPlusFirstAndLast)
-				</div>
-			</div>
-		</div>
-	</div>
+                    mẫu tin
+                </div>
+                <div class="col-md-6 text-center">
+                    @Html.PagedListPager(
+                        Model,
+                        page => Url.Action(
+                            "Index",
+                            new
+                            {
+                                page,
+                                pageSize = ViewBag.CurrentPageSize,
+                                keyword = ViewBag.Keywowrd
+                            }),
+                        PagedListRenderOptions.ClassicPlusFirstAndLast)
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
 @section scripts
 {
-	<script type="text/javascript">
-		$(document).ready(function() {
-			$('#tblsuppliers tr ').on("click",
-				"[data-toggle-stale = true]",
-				function(e) {
-					var $this = $(this);
-					var url = $this.attr('data-url');
-					var args = $this.attr('data-args');
-					$.post(url,
-						{ "args": args },
-						function(data) {
-							if (data.Result) {
-								$this.attr('data-args', data.Message);
-								$this.toggleClass('true');
-							} else {
-								alert(data.Message);
-							}
-						});
-				});
-			$('#pageSelect').change(function() {
-				$('#pageSize').val($(this).val());
-				$('#searchSupplier').submit();
-			})
-		})
-	</script>
+    <script src="~/Scripts/plugins/dataTables/jquery.dataTables.js"></script>
+    <script src="~/Scripts/plugins/dataTables/dataTables.responsive.js"></script>
+    <script src="~/Scripts/plugins/dataTables/dataTables.bootstrap.js"></script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#tblsuppliers tr ').on("click",
+                "[data-toggle-stale = true]",
+                function (e) {
+                    var $this = $(this);
+                    var url = $this.attr('data-url');
+                    var args = $this.attr('data-args');
+                    $.post(url,
+                        { "args": args },
+                        function (data) {
+                            if (data.Result) {
+                                $this.attr('data-args', data.Message);
+                                $this.toggleClass('true');
+                            } else {
+                                alert(data.Message);
+                            }
+                        });
+                });
+            $('#pageSelect').change(function() {
+	            $('#pageSize').val($(this).val());
+	            $('#searchSupplier').submit();
+            });
+
+            $('#tblsuppliers tbody').on('click',
+	            'a.dz-remove',
+	            function (e) {
+		            e.preventDefault();
+		            var that = $(this);
+		            var confirmResult = confirm("Bạn có thực sự muốn xóa khách sạn này?");
+		            if (confirmResult) {
+			            $.ajax({
+				            type: "POST",
+				            url: that.attr('href'),
+				            success: function (response) {
+					            if (response) {
+						            var row = that.closest('tr').get(0);
+						            pageTable.fnDeleteRow(row);
+					            } else {
+						            alert('Không thể xóa khách sạn này.');
+					            }
+				            },
+				            error: function (xhr, ajaxOptions, thrownError) {
+					            console.log(xhr.responseText);
+				            }
+			            });
+                    }
+		            location.reload();
+	            });
+        })
+    </script>
 }
-
-

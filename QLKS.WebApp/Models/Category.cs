@@ -23,6 +23,7 @@ namespace QLKS.WebApp.Models
         public Guid? ParentId { get; set; } // Mã loại sản phẩm cha
         public int? ParentLevel { get; set; } // 
         public int OrderNo { get; set; }
+        
 
         public bool Actived { get; set; }
 

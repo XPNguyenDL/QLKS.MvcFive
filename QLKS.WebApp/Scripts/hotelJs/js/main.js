@@ -96,8 +96,8 @@
         speed: 1000,
         autoplay:false,
         arrows: true,
-        prevArrow: '<button type="button" class="slick-prev"><i class="ti-angle-left"></i></button>',
-        nextArrow: '<button type="button" class="slick-next"><i class="ti-angle-right"></i></button>',
+        prevArrow: '<button type="button" class="slick-prev"><i class="fa-solid fa-chevron-left"></i></button>',
+        nextArrow: '<button type="button" class="slick-next"><i class="fa-solid fa-chevron-right"></i></i></button>',
         slidesToShow: 1,
         slidesToScroll: 1,
         responsive: [
@@ -196,7 +196,7 @@
       animation: 'fade', // Fade, slide, none
       animationInSpeed: 200, // Animation in speed (ms)
       animationOutSpeed: 200, // Animation out speed (ms)
-      scrollText: '<i class="ti-arrow-up"></i>', // Text for element
+        scrollText: '<i class="fa-solid fa-chevron-up"></i>', // Text for element
       activeOverlay: false, // Set CSS color to display scrollUp active point, e.g '#00FFFF'
     });
 

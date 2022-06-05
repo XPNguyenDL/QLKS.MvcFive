@@ -11,7 +11,7 @@ namespace QLKS.WebApp.Controllers
 
         public ActionResult About()
         {
-            ViewBag.Message = "Your application description page.";
+            ViewBag.Message = "Quản lý thông tin khách sạn.";
 
             return View();
         }

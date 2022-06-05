@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
@@ -7,7 +8,7 @@ using System.Web;
 
 namespace QLKS.WebApp.Models
 {
-    public class Supplier
+    public class Supplier : IEnumerable
     {
         public Guid SupplierId { get; set; }
 
@@ -32,13 +33,15 @@ namespace QLKS.WebApp.Models
         [DataType(DataType.EmailAddress)]
         public string Email { get; set;}
 
-        [StringLength(30), RegularExpression(@"\d{3,4}-\d{3}-\d{4,5}")]
-        
-
+        [StringLength(30), RegularExpression(@"(84|0[3|5|7|8|9])+([0-9]{8})\b", ErrorMessage = "Vui lòng nhập lại số điện thoại!")]
         public string Phone { get; set;}
 
         [StringLength(100), DataType(DataType.Url)]
-        public string HomePage { get; set;}
+        public string HomePage { get; set; }
+        public string Image { get; set; }
+        [StringLength(5000)]
+        public string ShortInfo { get; set; }
+
 
         public bool Actived { get; set;}
 
@@ -49,5 +52,9 @@ namespace QLKS.WebApp.Models
         // Navigation properties
         // ===========================================================
         public virtual IList<Product> Products { get; set; }
+        public IEnumerator GetEnumerator()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

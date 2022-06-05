@@ -7,17 +7,17 @@
     <div class="col-md-6 m-b-sm">
 
         <div class="form-group">
-            @Html.LabelFor(model => model.UserName, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
+            @Html.Label("Tài khoản", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10" readonly>
                 @Html.EditorFor(model => model.UserName, new { htmlAttributes = new { @class = "form-control"} })
-                @Html.ValidationMessageFor(model => model.UserName, "", new { @class = "text-danger" })
+                @Html.ValidationMessageFor(model => model.UserName, "", new { @class = "text-danger"})
             </div>
         </div>
 
         <div class="hr-line-dashed"></div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.Profile.FirstName, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.Label("Họ và tên lót", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 <div class="checkbox">
                     @Html.EditorFor(model => model.Profile.FirstName)
@@ -27,7 +27,7 @@
         </div>
 
 	    <div class="form-group">
-		    @Html.LabelFor(model => model.Profile.LastName, htmlAttributes: new { @class = "control-label col-md-2" })
+		    @Html.Label("Tên", htmlAttributes: new { @class = "control-label col-md-2" })
 		    <div class="col-md-10">
 			    <div class="checkbox">
 				    @Html.EditorFor(model => model.Profile.LastName)
@@ -48,7 +48,7 @@
 
 
         <div class="form-group">
-            @Html.LabelFor(model => model.PhoneNumber, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.Label("Số điện thoại", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.PhoneNumber, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.PhoneNumber, "", new { @class = "text-danger" })
@@ -72,7 +72,7 @@
     </div>
 	<div class="col-md-6">
 		<div class="form-group">
-			@Html.Label("Upload", htmlAttributes: new { @class = "control-label col-md-2" })
+			@Html.Label("Hình nền", htmlAttributes: new { @class = "control-label col-md-2" })
 			<div class="col-md-10">
 				@if (!string.IsNullOrEmpty(Model.Profile.Picture))
 				{

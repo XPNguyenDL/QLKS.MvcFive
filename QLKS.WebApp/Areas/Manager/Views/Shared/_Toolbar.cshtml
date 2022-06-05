@@ -1,0 +1,35 @@
+﻿@{
+    Layout = null;
+}
+
+<div class="form-group">
+    <div class="col-md-offset-2 col-md-10">
+        @(Html.Bootstrap()
+			.SubmitButton()
+			.Value("Save-new")
+			.Text("Lưu & thêm mới")
+			.Name("save-action")
+			.Style(ButtonStyle.Success)
+	        .PrependIcon("fa fa-floppy-o"))
+		
+
+        @(Html.Bootstrap()
+			.SubmitButton()
+			.Value("Save-close")
+			.Text("Lưu & đóng")
+			.Name("save-action")
+			.Style(ButtonStyle.Danger)
+	        .PrependIcon("fa fa-power-off"))
+		
+        @(Html.Bootstrap()
+	        .ActionLinkButton("Trở vè danh sách", "Index")
+	        .Style(ButtonStyle.Info)
+	        .PrependIcon("fa fa-reply-all"))
+		
+        @*<button name="">
+			@Html.ActionLink()
+
+        </button>*@
+    </div>
+</div>
+
