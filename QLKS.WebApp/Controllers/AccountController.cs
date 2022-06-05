@@ -1,8 +1,10 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using QLKS.WebApp.DAL;
@@ -85,7 +87,7 @@ namespace QLKS.WebApp.Controllers
                 case SignInStatus.Success:
                     var user = UserManager.FindByName(model.UserName);
                     var roles = UserManager.GetRoles(user.Id);
-                    if (roles.Count == 0)
+                    if (roles.Count == 0 || roles.Count == 1 && roles[0] == "Customer")
                     {
                         return RedirectToLocal(returnUrl);
                     }
@@ -499,6 +501,55 @@ namespace QLKS.WebApp.Controllers
                 }
                 context.HttpContext.GetOwinContext().Authentication.Challenge(properties, LoginProvider);
             }
+        }
+
+        [AllowAnonymous]
+        public ActionResult Create()
+        {
+            return View();
+        }
+
+        private HotelDbContext db = new HotelDbContext();
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Create(FormCollection data, QLKS.WebApp.DAL.HotelDbContext context, HttpPostedFileBase upload)
+        {
+            var accounts = new Account();
+            var userManager = new UserManager<Account>(new UserStore<Account>(context));
+            var roles = db.Roles.ToList();
+            ViewBag.Roles = roles;
+            try
+            {
+                UpdateModel(accounts, new[]
+                {
+                    "UserName", "Email", "PhoneNumber", "Profile", "RoleTemps"
+                });
+                if (db.IdentityUsers.SingleOrDefault(x => x.UserName == accounts.UserName && x.Id != accounts.Id) != null)
+                {
+                    ModelState.AddModelError("UserName", "UserName này đã tồn tại!!!");
+                }
+                if (ModelState.IsValid)
+                {
+
+                    accounts.Profile.AccountID = Guid.NewGuid().ToString();
+                    
+
+                    var result = userManager.Create(accounts, accounts.Profile.Password);
+
+                    if (result.Succeeded)
+                    {
+                        userManager.AddToRole(accounts.Id, "Customer");
+                    }
+                    return RedirectToAction("Login");
+                }
+            }
+            catch (Exception e)
+            {
+                ModelState.AddModelError("", e.Message);
+            }
+
+            return View(accounts);
         }
         #endregion
     }
